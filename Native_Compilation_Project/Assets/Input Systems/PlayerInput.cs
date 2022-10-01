@@ -53,6 +53,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb551581-87d0-4802-9df4-0f530f7dcaaf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c22cf6c-49a2-4811-9d4c-a7ffd330b11a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -176,6 +194,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94039e73-4ce2-42a5-b06f-2f81646a8340"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccbf5078-a0e1-4522-b470-e84f2c8ce0fc"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +227,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Map_Movement = m_Player_Map.FindAction("Movement", throwIfNotFound: true);
         m_Player_Map_Mouse = m_Player_Map.FindAction("Mouse", throwIfNotFound: true);
         m_Player_Map_Pickup = m_Player_Map.FindAction("Pickup", throwIfNotFound: true);
+        m_Player_Map_Throw = m_Player_Map.FindAction("Throw", throwIfNotFound: true);
+        m_Player_Map_Shoot = m_Player_Map.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +291,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map_Movement;
     private readonly InputAction m_Player_Map_Mouse;
     private readonly InputAction m_Player_Map_Pickup;
+    private readonly InputAction m_Player_Map_Throw;
+    private readonly InputAction m_Player_Map_Shoot;
     public struct Player_MapActions
     {
         private @PlayerInput m_Wrapper;
@@ -256,6 +300,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Map_Movement;
         public InputAction @Mouse => m_Wrapper.m_Player_Map_Mouse;
         public InputAction @Pickup => m_Wrapper.m_Player_Map_Pickup;
+        public InputAction @Throw => m_Wrapper.m_Player_Map_Throw;
+        public InputAction @Shoot => m_Wrapper.m_Player_Map_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,6 +320,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pickup.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPickup;
                 @Pickup.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPickup;
                 @Pickup.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPickup;
+                @Throw.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnThrow;
+                @Throw.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnThrow;
+                @Throw.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnThrow;
+                @Shoot.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -287,6 +339,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pickup.started += instance.OnPickup;
                 @Pickup.performed += instance.OnPickup;
                 @Pickup.canceled += instance.OnPickup;
+                @Throw.started += instance.OnThrow;
+                @Throw.performed += instance.OnThrow;
+                @Throw.canceled += instance.OnThrow;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -296,5 +354,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

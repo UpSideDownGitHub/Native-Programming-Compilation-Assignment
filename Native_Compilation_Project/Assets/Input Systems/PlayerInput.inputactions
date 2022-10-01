@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Throw",
+                    "type": "Button",
+                    "id": "eb551581-87d0-4802-9df4-0f530f7dcaaf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "9c22cf6c-49a2-4811-9d4c-a7ffd330b11a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -152,6 +170,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94039e73-4ce2-42a5-b06f-2f81646a8340",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ccbf5078-a0e1-4522-b470-e84f2c8ce0fc",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

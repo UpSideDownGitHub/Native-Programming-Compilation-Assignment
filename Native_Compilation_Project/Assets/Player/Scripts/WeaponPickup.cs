@@ -9,11 +9,13 @@ public class WeaponPickup : MonoBehaviour
     public PlayerMovement playermovement;
     public PlayerInput playerInput;
     public Transform spawnPosition;
-    private bool pressed = false;
     private List<GameObject> items = new List<GameObject>();
+
+
     [Header("Weapons")]
     public GameObject[] weapons;
     public GameObject currentWeapon;
+
 
     [Header("Throwing Old Weapon")]
     public float maxForce;
@@ -48,6 +50,17 @@ public class WeaponPickup : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if (playerInput.Player_Map.Throw.WasPressedThisFrame())
+        {
+            if (currentWeapon != null)
+            {
+                GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
+                _temp2.GetComponent<ID>().pickup = true;
+                _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
+                _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
+                Destroy(currentWeapon);
+            }
+        }
         if (playerInput.Player_Map.Pickup.WasPressedThisFrame())
         {
             if (items.Count > 0)
@@ -56,7 +69,7 @@ public class WeaponPickup : MonoBehaviour
                 {
                     GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
                     _temp2.GetComponent<ID>().pickup = true;
-                    _temp2.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(minForce, maxForce), Random.Range(minForce, maxForce), Random.Range(minForce, maxForce)));
+                    _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                     Destroy(currentWeapon);
                 }
