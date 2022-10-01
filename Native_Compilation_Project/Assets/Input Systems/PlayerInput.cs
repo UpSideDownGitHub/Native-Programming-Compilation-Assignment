@@ -44,6 +44,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pickup"",
+                    ""type"": ""Value"",
+                    ""id"": ""3d6f6f2a-0006-4879-96ef-4b260df9d8d6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -156,6 +165,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be25bcf6-96e8-47b1-91b7-d6458d41118e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -166,6 +186,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Map = asset.FindActionMap("Player_Map", throwIfNotFound: true);
         m_Player_Map_Movement = m_Player_Map.FindAction("Movement", throwIfNotFound: true);
         m_Player_Map_Mouse = m_Player_Map.FindAction("Mouse", throwIfNotFound: true);
+        m_Player_Map_Pickup = m_Player_Map.FindAction("Pickup", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,12 +248,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IPlayer_MapActions m_Player_MapActionsCallbackInterface;
     private readonly InputAction m_Player_Map_Movement;
     private readonly InputAction m_Player_Map_Mouse;
+    private readonly InputAction m_Player_Map_Pickup;
     public struct Player_MapActions
     {
         private @PlayerInput m_Wrapper;
         public Player_MapActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Map_Movement;
         public InputAction @Mouse => m_Wrapper.m_Player_Map_Mouse;
+        public InputAction @Pickup => m_Wrapper.m_Player_Map_Pickup;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -248,6 +271,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Mouse.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMouse;
                 @Mouse.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMouse;
                 @Mouse.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMouse;
+                @Pickup.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPickup;
+                @Pickup.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPickup;
+                @Pickup.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPickup;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -258,6 +284,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Mouse.started += instance.OnMouse;
                 @Mouse.performed += instance.OnMouse;
                 @Mouse.canceled += instance.OnMouse;
+                @Pickup.started += instance.OnPickup;
+                @Pickup.performed += instance.OnPickup;
+                @Pickup.canceled += instance.OnPickup;
             }
         }
     }
@@ -266,5 +295,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
+        void OnPickup(InputAction.CallbackContext context);
     }
 }

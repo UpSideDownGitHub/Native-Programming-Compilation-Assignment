@@ -11,14 +11,14 @@ public class PlayerMovement : MonoBehaviour
     public float smoothValue = 0.2f;
 
     private Rigidbody rb;
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
 
     [Header("Rotation")]
     public float strength = 5;
 
     private void Awake()
     {
-        playerInput = new PlayerInput();
+        playerInput = new();
         rb = this.GetComponent<Rigidbody>();
     }
 
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Update()
-    { 
+    {
         Vector2 _mousePos = playerInput.Player_Map.Mouse.ReadValue<Vector2>();
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
         Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(_mousePos);
