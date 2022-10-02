@@ -55,6 +55,7 @@ public class WeaponPickup : MonoBehaviour
             if (currentWeapon != null)
             {
                 GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
+                _temp2.GetComponent<ID>().curAmmo = currentWeapon.GetComponent<Shooting>().curAmmo;
                 _temp2.GetComponent<ID>().pickup = true;
                 _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                 _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
@@ -68,6 +69,7 @@ public class WeaponPickup : MonoBehaviour
                 if (currentWeapon != null)
                 {
                     GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
+                    _temp2.GetComponent<ID>().curAmmo = currentWeapon.GetComponent<Shooting>().curAmmo;
                     _temp2.GetComponent<ID>().pickup = true;
                     _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
@@ -77,6 +79,7 @@ public class WeaponPickup : MonoBehaviour
                 _temp.GetComponent<ID>().pickup = false;
                 Destroy(_temp.GetComponent<Rigidbody>());
                 currentWeapon = _temp;
+                currentWeapon.GetComponent<Shooting>().curAmmo = items[0].gameObject.GetComponent<ID>().curAmmo;
                 Destroy(items[0].gameObject);
                 items.RemoveAt(0);
             }
