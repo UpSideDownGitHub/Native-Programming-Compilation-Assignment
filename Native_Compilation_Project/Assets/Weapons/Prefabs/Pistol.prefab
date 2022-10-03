@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponID: 0
   pickup: 1
+  curAmmo: 15
 --- !u!114 &5675404200331507221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +180,10 @@ MonoBehaviour:
   maxAmmo: 15
   curAmmo: 15
   bulletSpeed: 500
-  Manual: 1
+  manual: 1
+  shotGun: 0
   maxShootRate: 0.1
   shootRate: 0
+  maxShootRate2: 0
+  bulletAmmout: 0
+  deviation: 0

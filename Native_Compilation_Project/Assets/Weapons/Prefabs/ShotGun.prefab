@@ -186,4 +186,4 @@ MonoBehaviour:
   shootRate: 0
   maxShootRate2: 0.3
   bulletAmmout: 5
-  deviation: 2
+  deviation: 0.2
