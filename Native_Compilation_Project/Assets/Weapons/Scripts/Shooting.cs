@@ -14,13 +14,19 @@ public class Shooting : MonoBehaviour
     public int curAmmo;
     public float bulletSpeed;
 
-    public bool Manual;
+    public bool manual;
+    public bool shotGun;
     private float shotTime;
     [Header("Manual")]
     public float maxShootRate;
 
     [Header("Semi-Automatic")]
     public float shootRate;
+
+    [Header("ShotGun")]
+    public float maxShootRate2;
+    public int bulletAmmout;
+    public float deviation;
 
     // Start is called before the first frame update
     public void Start()
@@ -34,7 +40,7 @@ public class Shooting : MonoBehaviour
     {
         if (!this.GetComponent<ID>().pickup)
         {
-            if (Manual)
+            if (manual)
             {
                 if (playerInput.Player_Map.Shoot.WasPressedThisFrame() && Time.time > shotTime + maxShootRate)
                 {
@@ -47,7 +53,7 @@ public class Shooting : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (!shotGun)
             {
                 if (playerInput.Player_Map.Shoot.IsPressed() && Time.time > shotTime + shootRate)
                 {
@@ -57,6 +63,23 @@ public class Shooting : MonoBehaviour
                         shotTime = Time.time;
                         GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                         _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
+                    }
+                }
+            }
+            else
+            {
+                if (playerInput.Player_Map.Shoot.IsPressed() && Time.time > shotTime + maxShootRate2)
+                {
+                    if (curAmmo != 0)
+                    {
+                        curAmmo--;
+                        shotTime = Time.time;
+                        for (int i = 0; i < bulletAmmout; i++)
+                        {
+                            Quaternion _rot = new Quaternion(firePoint.transform.rotation.x, firePoint.transform.rotation.y + Random.Range(-deviation, deviation), firePoint.transform.rotation.z, firePoint.transform.rotation.w + Random.Range(-deviation, deviation));
+                            GameObject _temp = Instantiate(bullet, firePoint.transform.position, _rot);
+                            _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
+                        }
                     }
                 }
             }
