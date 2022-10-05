@@ -36,10 +36,13 @@ public class PlayerMovement : MonoBehaviour
     public void Update()
     {
         Vector2 _mousePos = playerInput.Player_Map.Mouse.ReadValue<Vector2>();
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(_mousePos);
-        float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-        transform.rotation = Quaternion.Euler(new Vector3(0f, -angle - 90, 0f));
+        Debug.Log(_mousePos);
+        //Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+        //Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(_mousePos);
+        //float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        //transform.rotation = Quaternion.Euler(new Vector3(0f, -angle - 90, 0f));
+        Vector3 _temp = new Vector3(_mousePos.x, 0, _mousePos.y);
+        transform.rotation = Quaternion.LookRotation(_temp);
     }
 
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b)

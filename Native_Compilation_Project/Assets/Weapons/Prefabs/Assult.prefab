@@ -144,14 +144,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35b26ac277506a4b836b25a94aa5e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 5
+  melee: 0
+  hitSpeed: 0
+  hitCoolDown: 0
   firePoint: {fileID: 7096273149030628661}
   bullet: {fileID: 4778730020531401928, guid: fe970cd94c4da694f91a7f969510c3a6, type: 3}
   maxAmmo: 30
   curAmmo: 30
   bulletSpeed: 500
-  Manual: 0
+  manual: 0
+  shotGun: 0
   maxShootRate: 0
   shootRate: 0.075
+  maxShootRate2: 0
+  bulletAmmout: 0
+  deviation: 0
 --- !u!1 &7096273149030628661
 GameObject:
   m_ObjectHideFlags: 0

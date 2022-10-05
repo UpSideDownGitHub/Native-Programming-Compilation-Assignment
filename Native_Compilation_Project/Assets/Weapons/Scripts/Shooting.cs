@@ -7,11 +7,15 @@ public class Shooting : MonoBehaviour
     [Header("Input")]
     public PlayerInput playerInput;
 
+    [Header("Bullet")]
+    public float damage;
+
     [Header("Melee")]
     public bool melee;
     public float hitSpeed;
     public float hitCoolDown;
     private bool once = true;
+    public Collider col;
 
 
     [Header("Shooting")]
@@ -52,14 +56,12 @@ public class Shooting : MonoBehaviour
                 if (Time.time > shotTime + hitSpeed && once)
                 {
                     once = false;
-                    this.GetComponent<BoxCollider>().enabled = false;
-                    Debug.Log("disabled");
+                    col.enabled = false;
                 }
                 if (playerInput.Player_Map.Shoot.WasPressedThisFrame() && Time.time > shotTime + hitCoolDown)
                 {
-                    Debug.Log("ENABLED");
                     once = true;
-                    this.GetComponent<BoxCollider>().enabled = true;
+                    col.enabled = true;
                     shotTime = Time.time;
                 }
             }
@@ -75,6 +77,7 @@ public class Shooting : MonoBehaviour
                             shotTime = Time.time;
                             GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
+                            _temp.GetComponent<INFO>().damage = damage;
                         }
                     }
                 }
@@ -88,12 +91,13 @@ public class Shooting : MonoBehaviour
                             shotTime = Time.time;
                             GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
+                            _temp.GetComponent<INFO>().damage = damage;
                         }
                     }
                 }
                 else
                 {
-                    if (playerInput.Player_Map.Shoot.IsPressed() && Time.time > shotTime + maxShootRate2)
+                    if (playerInput.Player_Map.Shoot.WasPressedThisFrame() && Time.time > shotTime + maxShootRate2)
                     {
                         if (curAmmo != 0)
                         {
@@ -104,6 +108,7 @@ public class Shooting : MonoBehaviour
                                 Quaternion _rot = new Quaternion(firePoint.transform.rotation.x, firePoint.transform.rotation.y + Random.Range(-deviation, deviation), firePoint.transform.rotation.z, firePoint.transform.rotation.w + Random.Range(-deviation, deviation));
                                 GameObject _temp = Instantiate(bullet, firePoint.transform.position, _rot);
                                 _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
+                                _temp.GetComponent<INFO>().damage = damage;
                             }
                         }
                     }
