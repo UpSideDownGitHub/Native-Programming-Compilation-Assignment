@@ -23,6 +23,9 @@ public class WeaponPickup : MonoBehaviour
     public float maxTorque;
     public float minTorque;
 
+    [Header("Fists")]
+    public GameObject fists;
+
     public void Awake()
     {
         col = this.GetComponent<SphereCollider>();
@@ -31,6 +34,7 @@ public class WeaponPickup : MonoBehaviour
     public void Start()
     {
         playerInput = playermovement.playerInput;
+        fists.SetActive(true);
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -60,12 +64,15 @@ public class WeaponPickup : MonoBehaviour
                 _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                 _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                 Destroy(currentWeapon);
+                currentWeapon = null;
+                fists.SetActive(true);
             }
         }
         if (playerInput.Player_Map.Pickup.WasPressedThisFrame())
         {
             if (items.Count > 0)
             {
+                fists.SetActive(false);
                 if (currentWeapon != null)
                 {
                     GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
@@ -84,6 +91,5 @@ public class WeaponPickup : MonoBehaviour
                 items.RemoveAt(0);
             }
         }
-
     }
 }
