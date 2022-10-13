@@ -6,20 +6,24 @@ using UnityEngine.InputSystem.Utilities;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region VARIABLES
     [Header("Movement")]
     public float movementSpeed = 10f;
     public float smoothValue = 0.2f;
+    public float dodgeMultiplier = 3;
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
     public PlayerInput playerInput;
 
     [Header("Rotation")]
     public float strength = 5;
+    public Vector3 prevRotation;
+    #endregion
 
     private void Awake()
     {
         playerInput = new();
-        rb = this.GetComponent<Rigidbody>();
+        _rb = this.GetComponent<Rigidbody>();
     }
 
     public void OnEnable()
@@ -36,21 +40,16 @@ public class PlayerMovement : MonoBehaviour
     public void Update()
     {
         Vector2 _mousePos = playerInput.Player_Map.Mouse.ReadValue<Vector2>();
-        Debug.Log(_mousePos);
-        //Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-        //Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(_mousePos);
-        //float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-        //transform.rotation = Quaternion.Euler(new Vector3(0f, -angle - 90, 0f));
         Vector3 _temp = new Vector3(_mousePos.x, 0, _mousePos.y);
-        transform.rotation = Quaternion.LookRotation(_temp);
-    }
-
-    float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
-    {
-        return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+        if (_temp != Vector3.zero)
+        {
+            prevRotation = _temp;
+            transform.rotation = Quaternion.LookRotation(_temp);
+        }
+        else
+            transform.rotation = Quaternion.LookRotation(prevRotation);
     }
     
-
     void FixedUpdate()
     {
         
@@ -61,13 +60,17 @@ public class PlayerMovement : MonoBehaviour
         if (_vec2 != Vector2.zero)
         {
             Vector3 _moveInput = new Vector3(_vec2.x, 0, _vec2.y);
-            //rb.velocity = _moveInput * movementSpeed;
             Vector3 zero = Vector3.zero;
-            rb.velocity = Vector3.SmoothDamp(rb.velocity, _moveInput * movementSpeed, ref zero, smoothValue);
+            if (playerInput.Player_Map.Dodge.WasPressedThisFrame())
+            {
+                _rb.velocity = _moveInput * movementSpeed * dodgeMultiplier;
+                return;
+            }
+            _rb.velocity = Vector3.SmoothDamp(_rb.velocity, _moveInput * movementSpeed, ref zero, smoothValue);
         }
         else
         {
-            rb.velocity = Vector2.zero;
+            _rb.velocity = Vector2.zero;
         }
     }
 }

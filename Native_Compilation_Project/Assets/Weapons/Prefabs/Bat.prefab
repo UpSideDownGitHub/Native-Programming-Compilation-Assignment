@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 8989342155136036851}
   - component: {fileID: 6591129807554237530}
   - component: {fileID: 2205603199167445367}
+  - component: {fileID: 4656772028882031864}
   m_Layer: 0
   m_Name: Bat
   m_TagString: PICKUP
@@ -206,3 +207,16 @@ MonoBehaviour:
   maxShootRate2: 0
   bulletAmmout: 0
   deviation: 0
+--- !u!65 &4656772028882031864
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3256666861501783084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 0.99999994, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

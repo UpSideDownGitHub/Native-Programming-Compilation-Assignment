@@ -71,6 +71,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed9b8d3c-985c-479e-8cd2-98ffc7e28786"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -186,17 +195,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""dac63d96-4608-499d-9813-bef4f74b2760"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""be25bcf6-96e8-47b1-91b7-d6458d41118e"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -209,7 +207,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8d8d3194-6f3f-4fde-88d5-8258f56ff8a7"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -260,6 +258,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""548fdf14-f1db-4d9b-b75d-b280e8aeb6d7"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -273,6 +282,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Map_Pickup = m_Player_Map.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Map_Throw = m_Player_Map.FindAction("Throw", throwIfNotFound: true);
         m_Player_Map_Shoot = m_Player_Map.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_Map_Dodge = m_Player_Map.FindAction("Dodge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +347,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map_Pickup;
     private readonly InputAction m_Player_Map_Throw;
     private readonly InputAction m_Player_Map_Shoot;
+    private readonly InputAction m_Player_Map_Dodge;
     public struct Player_MapActions
     {
         private @PlayerInput m_Wrapper;
@@ -346,6 +357,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_Player_Map_Pickup;
         public InputAction @Throw => m_Wrapper.m_Player_Map_Throw;
         public InputAction @Shoot => m_Wrapper.m_Player_Map_Shoot;
+        public InputAction @Dodge => m_Wrapper.m_Player_Map_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -370,6 +382,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnShoot;
+                @Dodge.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDodge;
+                @Dodge.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDodge;
+                @Dodge.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDodge;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -389,6 +404,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Dodge.started += instance.OnDodge;
+                @Dodge.performed += instance.OnDodge;
+                @Dodge.canceled += instance.OnDodge;
             }
         }
     }
@@ -400,5 +418,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnPickup(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
     }
 }
