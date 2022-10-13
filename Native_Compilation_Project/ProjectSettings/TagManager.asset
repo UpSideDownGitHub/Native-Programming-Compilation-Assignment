@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PICKUP
   - E_DAMAGE
+  - P_DAMAGE
   layers:
   - Default
   - TransparentFX

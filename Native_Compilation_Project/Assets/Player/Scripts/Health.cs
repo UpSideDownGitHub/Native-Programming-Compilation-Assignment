@@ -12,14 +12,24 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    public void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("P_DAMAGE"))
+        {
+            changeHealth(-collision.gameObject.GetComponent<INFO>().damage);
+            Destroy(collision.gameObject);
+        }
+    }
+
     public void changeHealth(float ammount)
     {
-        currentHealth += ammount;
-        if (currentHealth <= 0)
+        if (currentHealth + ammount > 0)
+            currentHealth += ammount;
+        else
         {
-            // DESTROY 
-            // testing
-            Debug.Log("Player Died");
+            // kill the enemy
+            // TEMP FOR TESTING
+            Debug.Log("THE PLAYER HAS BEEN KILLED");
             currentHealth = maxHealth;
         }
     }
