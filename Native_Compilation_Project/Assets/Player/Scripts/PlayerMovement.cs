@@ -28,12 +28,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnEnable()
     {
-        playerInput.Player_Map.Enable();
+        playerInput.Enable();
     }
 
     public void OnDisable()
     {
-        playerInput.Player_Map.Disable();
+        playerInput.Disable();
     }
 
     // rotates the mouse positions
