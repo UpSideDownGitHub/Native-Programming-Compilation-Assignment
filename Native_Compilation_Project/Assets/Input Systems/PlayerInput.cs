@@ -195,17 +195,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""be25bcf6-96e8-47b1-91b7-d6458d41118e"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pickup"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8d8d3194-6f3f-4fde-88d5-8258f56ff8a7"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
@@ -217,12 +206,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""94039e73-4ce2-42a5-b06f-2f81646a8340"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""be25bcf6-96e8-47b1-91b7-d6458d41118e"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Throw"",
+                    ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -239,8 +228,19 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ccbf5078-a0e1-4522-b470-e84f2c8ce0fc"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""94039e73-4ce2-42a5-b06f-2f81646a8340"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0113af9d-0a10-4cdb-b214-aae28436edf6"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -250,8 +250,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0113af9d-0a10-4cdb-b214-aae28436edf6"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""id"": ""ccbf5078-a0e1-4522-b470-e84f2c8ce0fc"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
