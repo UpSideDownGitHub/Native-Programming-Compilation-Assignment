@@ -131,10 +131,10 @@ public class MenuManager : MonoBehaviour
     {
         rebindingOperation = keyActions[action].action.PerformInteractiveRebinding()
             .WithControlsExcluding("Mouse")
-            .WithControlsExcluding(currentKeyText[0].text)
-            .WithControlsExcluding(currentKeyText[1].text)
-            .WithControlsExcluding(currentKeyText[2].text)
-            .WithControlsExcluding(currentKeyText[3].text)
+            .WithControlsExcluding(keyActions[0].action.bindings[keyActions[0].action.GetBindingIndexForControl(keyActions[0].action.controls[0])].effectivePath)
+            .WithControlsExcluding(keyActions[1].action.bindings[keyActions[1].action.GetBindingIndexForControl(keyActions[1].action.controls[0])].effectivePath)
+            .WithControlsExcluding(keyActions[2].action.bindings[keyActions[2].action.GetBindingIndexForControl(keyActions[2].action.controls[0])].effectivePath)
+            .WithControlsExcluding(keyActions[3].action.bindings[keyActions[3].action.GetBindingIndexForControl(keyActions[3].action.controls[0])].effectivePath)
             .OnMatchWaitForAnother(0.1f)
             .OnComplete(operation => RebindComplete(action))
             .Start();
