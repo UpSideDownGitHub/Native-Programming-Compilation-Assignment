@@ -78,17 +78,14 @@ public class Enemy : MonoBehaviour
         // IF ANGLE WITHING ALLOWED RANGE
         if (angle < minSightAngle)
         {
-            Debug.Log("WITHING ANGLE");
             // CHECK IF THERE IS A LINE OF SIGHT TO THE PLAYER
             RaycastHit hit;
             Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red, 2);
             if (Physics.Raycast(transform.position, _player.transform.position - transform.position, out hit, maxSightDistance))
             {
-                Debug.Log("HIT");
                 // IF THERE IS A LINE OF SIGHT TO THE PLAYER
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
-                    Debug.Log("PLAYER HIT");
                     followingPlayer = true;
                     
                     // MOVE TO PLAYER POSITION
@@ -132,6 +129,12 @@ public class Enemy : MonoBehaviour
                     currentPoint = 0;
             }
         }
+    }
+
+    public void Hearing(Vector3 pos)
+    {
+        seenPlayer = true;
+        playerLastKnowPosition = pos;
     }
 
     public void shoot()
