@@ -219,7 +219,7 @@ public class MenuManager : MonoBehaviour
             }
             else if (playerInput.Menus_Map.A.WasPressedThisFrame())
             {
-                //SceneManager.LoadSceneAsync(level + 1);
+                SceneManager.LoadSceneAsync(level + 1);
                 Debug.Log("LOAD LEVEL: " + (level + 1).ToString());
             }
         }
