@@ -1108,6 +1108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 229375318}
   - component: {fileID: 229375319}
+  - component: {fileID: 229375320}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -1142,6 +1143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b71d4e08686f24b82ba7ba705932ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 229375320}
+  Up: {fileID: 8529722303033027879, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Down: {fileID: 1874417066705181915, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Left: {fileID: -3637717481801934881, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Right: {fileID: 3888308603719541723, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  A: {fileID: -5398018203299378638, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  B: {fileID: -6505030324204536874, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   mainScreen: {fileID: 1894562052}
   buttons:
   - {fileID: 572110672}
@@ -1185,6 +1193,36 @@ MonoBehaviour:
   - {fileID: 3182057015322165584, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   - {fileID: -1329741762798859546, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   curControlSetting: 0
+--- !u!114 &229375320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229375317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Menus_Map
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &233735618
 GameObject:
   m_ObjectHideFlags: 0

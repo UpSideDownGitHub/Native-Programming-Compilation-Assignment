@@ -13,7 +13,11 @@ public class PlayerMovement : MonoBehaviour
     public float dodgeMultiplier = 3;
 
     private Rigidbody _rb;
+    [Header("Input")]
     public PlayerInput playerInput;
+    public InputActionReference Mouse;
+    public InputActionReference Movement;
+    public InputActionReference Dodge;
 
     [Header("Rotation")]
     public float strength = 5;
@@ -22,24 +26,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        playerInput = new();
         _rb = this.GetComponent<Rigidbody>();
-    }
 
-    public void OnEnable()
-    {
-        playerInput.Enable();
-    }
-
-    public void OnDisable()
-    {
-        playerInput.Disable();
+        string savedInput = PlayerPrefs.GetString("Controls", string.Empty);
+        playerInput.actions.LoadBindingOverridesFromJson(savedInput);
     }
 
     // rotates the mouse positions
     public void Update()
     {
-        Vector2 _mousePos = playerInput.Player_Map.Mouse.ReadValue<Vector2>();
+        Vector2 _mousePos = Mouse.action.ReadValue<Vector2>();
         Vector3 _temp = new Vector3(_mousePos.x, 0, _mousePos.y);
         if (_temp != Vector3.zero)
         {
@@ -50,18 +46,14 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(prevRotation);
     }
     
-    void FixedUpdate()
-    {
-        
-    }
     public void LateUpdate()
     {
-        Vector2 _vec2 = playerInput.Player_Map.Movement.ReadValue<Vector2>();
+        Vector2 _vec2 = Movement.action.ReadValue<Vector2>();
         if (_vec2 != Vector2.zero)
         {
             Vector3 _moveInput = new Vector3(_vec2.x, 0, _vec2.y);
             Vector3 zero = Vector3.zero;
-            if (playerInput.Player_Map.Dodge.WasPressedThisFrame())
+            if (Dodge.action.WasPressedThisFrame())
             {
                 _rb.velocity = _moveInput * movementSpeed * dodgeMultiplier;
                 return;

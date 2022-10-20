@@ -9,7 +9,14 @@ using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("Input")]
     public PlayerInput playerInput;
+    public InputActionReference Up;
+    public InputActionReference Down;
+    public InputActionReference Left;
+    public InputActionReference Right;
+    public InputActionReference A;
+    public InputActionReference B;
 
     [Header("Main Screen")]
     public GameObject mainScreen;
@@ -56,50 +63,14 @@ public class MenuManager : MonoBehaviour
     {
         curSelected = 0;
         curLevel = 0;
-        playerInput = new();
 
-        string movementRebind = PlayerPrefs.GetString("movementRebind", string.Empty);
-        string aimRebind = PlayerPrefs.GetString("aimRebind", string.Empty);
-        string shootRebind = PlayerPrefs.GetString("shootRebind", string.Empty);
-        string pickupRebind = PlayerPrefs.GetString("PickupRebind", string.Empty);
-        string dodgeRebind = PlayerPrefs.GetString("dodgeRebind", string.Empty);
-        string throwRebind = PlayerPrefs.GetString("throwRebind", string.Empty);
-        if (movementRebind == null || movementRebind == "")
+        string savedInput = PlayerPrefs.GetString("Controls", string.Empty);
+        if (string.IsNullOrEmpty(savedInput))
         {
-            string movementRebind2 = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString("movementRebind", movementRebind2);
+            Save();
+            savedInput = PlayerPrefs.GetString("Controls", string.Empty);
         }
-        if (aimRebind == null || aimRebind == "")
-        {
-            string aimRebind2 = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString("aimRebind", aimRebind2);
-        }
-        if (shootRebind == null || shootRebind == "")
-        {
-            string shootRebind2 = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString("shootRebind", shootRebind2);
-        }
-        if (pickupRebind == null || pickupRebind == "")
-        {
-            string pickupRebind2 = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString("pickupRebind", pickupRebind2);
-        }
-        if (dodgeRebind == null || dodgeRebind == "")
-        {
-            string dodgeRebind2 = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString("dodgeRebind", dodgeRebind2);
-        }
-        if (throwRebind == null || throwRebind == "")
-        {
-            string throwRebind2 = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString("throwRebind", throwRebind2);
-        }
-        playerInput.Player_Map.Shoot.LoadBindingOverridesFromJson(movementRebind);
-        playerInput.Player_Map.Shoot.LoadBindingOverridesFromJson(aimRebind);
-        playerInput.Player_Map.Shoot.LoadBindingOverridesFromJson(shootRebind);
-        playerInput.Player_Map.Shoot.LoadBindingOverridesFromJson(pickupRebind);
-        playerInput.Player_Map.Shoot.LoadBindingOverridesFromJson(dodgeRebind);
-        playerInput.Player_Map.Shoot.LoadBindingOverridesFromJson(throwRebind);
+        playerInput.actions.LoadBindingOverridesFromJson(savedInput);
         loadCurrentKeybinds();
     }
     public void loadCurrentKeybinds()
@@ -113,18 +84,8 @@ public class MenuManager : MonoBehaviour
     }
     public void Save()
     {
-        string movementRebind = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-        string aimRebind = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-        string shootRebind = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-        string pickupRebind = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-        string dodgeRebind = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-        string throwRebind = playerInput.Player_Map.Pickup.SaveBindingOverridesAsJson();
-        PlayerPrefs.SetString("movementRebind", movementRebind);
-        PlayerPrefs.SetString("aimRebind", aimRebind);
-        PlayerPrefs.SetString("shootRebind", shootRebind);
-        PlayerPrefs.SetString("pickupRebind", pickupRebind);
-        PlayerPrefs.SetString("dodgeRebind", dodgeRebind);
-        PlayerPrefs.SetString("throwRebind", throwRebind);
+        string currentInputs = playerInput.actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("Controls", currentInputs);
     }
 
     public void StartRebinding(int action)
@@ -146,18 +107,8 @@ public class MenuManager : MonoBehaviour
 
         currentKeyText[action].text = InputControlPath.ToHumanReadableString(keyActions[action].action.bindings[bindingIndex].effectivePath,
                                                                                   InputControlPath.HumanReadableStringOptions.OmitDevice);
-
+        Save();
         rebindingOperation.Dispose();
-    }
-
-    public void OnEnable()
-    {
-        playerInput.Enable();
-    }
-
-    public void OnDisable()
-    {
-        playerInput.Disable();
     }
 
     // Update is called once per frame
@@ -165,23 +116,23 @@ public class MenuManager : MonoBehaviour
     {
         if (mainScreen.activeInHierarchy)
         {
-            if (playerInput.Menus_Map.Up.WasPressedThisFrame() && curSelected > 0)
+            if (Up.action.WasPressedThisFrame() && curSelected > 0)
                 curSelected--;
-            else if (playerInput.Menus_Map.Down.WasPressedThisFrame() && curSelected < 2)
+            else if (Down.action.WasPressedThisFrame() && curSelected < 2)
                 curSelected++;
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(buttons[curSelected]);
         }
         else if (levelSelectScreen.activeInHierarchy && !prematureUpdateCall)
         {
-            if (playerInput.Menus_Map.Left.WasPressedThisFrame() && curLevel > 0)
+            if (Left.action.WasPressedThisFrame() && curLevel > 0)
             {
                 curLevel--;
                 sorter.transform.position = new Vector3(sorter.transform.position.x + moveAmmount,
                                         sorter.transform.position.y,
                                         sorter.transform.position.z);
             }
-            else if (playerInput.Menus_Map.Right.WasPressedThisFrame() && curLevel < sorter.transform.childCount - 1)
+            else if (Right.action.WasPressedThisFrame() && curLevel < sorter.transform.childCount - 1)
             {
                 curLevel++;
                 sorter.transform.position = new Vector3(sorter.transform.position.x - moveAmmount,
@@ -189,12 +140,12 @@ public class MenuManager : MonoBehaviour
                                         sorter.transform.position.z);
             }
 
-            if (playerInput.Menus_Map.B.WasPressedThisFrame())
+            if (B.action.WasPressedThisFrame())
             {
                 levelSelectScreen.SetActive(false);
                 mainScreen.SetActive(true);
             }
-            else if (playerInput.Menus_Map.A.WasPressedThisFrame())
+            else if (A.action.WasPressedThisFrame())
             {
                 levelSelectScreen.SetActive(false);
                 levelInfo.SetActive(true);
@@ -211,13 +162,13 @@ public class MenuManager : MonoBehaviour
                 //levelImage.sprite = Sprite;
                 firstTime = false;
             }
-            if (playerInput.Menus_Map.B.WasPressedThisFrame())
+            if (B.action.WasPressedThisFrame())
             {
                 levelInfo.SetActive(false);
                 levelSelectScreen.SetActive(true);
                 firstTime = true;
             }
-            else if (playerInput.Menus_Map.A.WasPressedThisFrame())
+            else if (A.action.WasPressedThisFrame())
             {
                 SceneManager.LoadSceneAsync(level + 1);
                 Debug.Log("LOAD LEVEL: " + (level + 1).ToString());
@@ -237,25 +188,25 @@ public class MenuManager : MonoBehaviour
                 }
                 else if (settingsControlOptions.activeInHierarchy)
                 {
-                    if (playerInput.Menus_Map.Up.WasPressedThisFrame() && (curControlSetting == 1 ||
+                    if (Up.action.WasPressedThisFrame() && (curControlSetting == 1 ||
                                                            curControlSetting == 2 ||
                                                            curControlSetting == 4))
                         curControlSetting--;
-                    else if (playerInput.Menus_Map.Down.WasPressedThisFrame() && (curControlSetting == 0 ||
+                    else if (Down.action.WasPressedThisFrame() && (curControlSetting == 0 ||
                                                                                   curControlSetting == 1 ||
                                                                                   curControlSetting == 3))
                         curControlSetting++;
-                    else if (playerInput.Menus_Map.Right.WasPressedThisFrame() && (curControlSetting == 1 ||
+                    else if (Right.action.WasPressedThisFrame() && (curControlSetting == 1 ||
                                                                                   curControlSetting == 2))
                         curControlSetting += 2;
-                    else if (playerInput.Menus_Map.Left.WasPressedThisFrame() && (curControlSetting == 3 ||
+                    else if (Left.action.WasPressedThisFrame() && (curControlSetting == 3 ||
                                                                                   curControlSetting == 4))
                         curControlSetting -= 2;
 
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(controlSettingButtons[curControlSetting]);
 
-                    if (playerInput.Menus_Map.A.WasPressedThisFrame())
+                    if (A.action.WasPressedThisFrame())
                     {
                         if (curControlSetting == 0)
                         {
@@ -285,21 +236,21 @@ public class MenuManager : MonoBehaviour
                     }
                 }
 
-                if (playerInput.Menus_Map.B.WasPressedThisFrame())
+                if (B.action.WasPressedThisFrame())
                 {
                     inSettings = false;
                 }
             }
             else
             {
-                if (playerInput.Menus_Map.Up.WasPressedThisFrame() && settingsCurSelected > 0)
+                if (Up.action.WasPressedThisFrame() && settingsCurSelected > 0)
                     settingsCurSelected--;
-                else if (playerInput.Menus_Map.Down.WasPressedThisFrame() && settingsCurSelected < settingsButtons.Length - 1)
+                else if (Down.action.WasPressedThisFrame() && settingsCurSelected < settingsButtons.Length - 1)
                     settingsCurSelected++;
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(settingsButtons[settingsCurSelected]);
 
-                if (playerInput.Menus_Map.B.WasPressedThisFrame())
+                if (B.action.WasPressedThisFrame())
                 {
                     settingsScreen.SetActive(false);
                     mainScreen.SetActive(true);

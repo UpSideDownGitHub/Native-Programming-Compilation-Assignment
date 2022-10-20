@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 382841192}
   - component: {fileID: 382841193}
   - component: {fileID: 382841194}
+  - component: {fileID: 382841195}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -241,6 +242,10 @@ MonoBehaviour:
   movementSpeed: 10
   smoothValue: 0.05
   dodgeMultiplier: 1.5
+  playerInput: {fileID: 382841195}
+  Mouse: {fileID: -1329741762798859546, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Movement: {fileID: 3182057015322165584, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Dodge: {fileID: -2978951424884180280, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   strength: 5
   prevRotation: {x: 0, y: 0, z: 0}
 --- !u!54 &382841193
@@ -273,6 +278,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+--- !u!114 &382841195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382841187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player_Map
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &587521936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4519,6 +4554,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   col: {fileID: 0}
   playermovement: {fileID: 382841192}
+  playerInput: {fileID: 0}
+  ThrowWeapon: {fileID: -5199148947136158907, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Pickup: {fileID: 3200104883488856823, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   spawnPosition: {fileID: 1326641109}
   weapons:
   - {fileID: 9037307327468426062, guid: 395346f53c0ad114fa1963ad67aacb03, type: 3}

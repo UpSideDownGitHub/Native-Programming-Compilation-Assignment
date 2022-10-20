@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponPickup : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class WeaponPickup : MonoBehaviour
     public SphereCollider col;
     public PlayerMovement playermovement;
     public PlayerInput playerInput;
+    public InputActionReference ThrowWeapon;
+    public InputActionReference Pickup;
     public Transform spawnPosition;
     private List<GameObject> items = new List<GameObject>();
 
@@ -54,7 +58,7 @@ public class WeaponPickup : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (playerInput.Player_Map.Throw.WasPressedThisFrame())
+        if (ThrowWeapon.action.WasPressedThisFrame())
         {
             if (currentWeapon != null)
             {
@@ -68,7 +72,7 @@ public class WeaponPickup : MonoBehaviour
                 fists.SetActive(true);
             }
         }
-        if (playerInput.Player_Map.Pickup.WasPressedThisFrame())
+        if (Pickup.action.WasPressedThisFrame())
         {
             if (items.Count > 0)
             {

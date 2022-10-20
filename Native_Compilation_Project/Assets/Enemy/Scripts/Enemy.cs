@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [Header("########## PLAYER ##########")]
     private NavMeshAgent _agent;
     private GameObject _player;
-    
+
     [Header("########## MOVEMENT ##########")]
     [Header("Nav Mesh Agent")]
     public float speed = 3.5f;
@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         curAmmo = maxAmmo;
         _agent.speed = speed;
         _agent.angularSpeed = angularSpeed;
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     followingPlayer = true;
-                    
+
                     // MOVE TO PLAYER POSITION
                     seenPlayer = true;
                     playerLastKnowPosition = _player.transform.position;

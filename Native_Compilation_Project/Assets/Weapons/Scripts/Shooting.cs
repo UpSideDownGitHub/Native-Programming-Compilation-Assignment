@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shooting : MonoBehaviour
 {
     [Header("Input")]
     public PlayerInput playerInput;
+    public InputActionReference Shoot;
 
     [Header("Bullet")]
     public float damage;
@@ -58,7 +60,7 @@ public class Shooting : MonoBehaviour
                     once = false;
                     col.enabled = false;
                 }
-                if (playerInput.Player_Map.Shoot.WasPressedThisFrame() && Time.time > shotTime + hitCoolDown)
+                if (Shoot.action.WasPressedThisFrame() && Time.time > shotTime + hitCoolDown)
                 {
                     once = true;
                     col.enabled = true;
@@ -69,7 +71,7 @@ public class Shooting : MonoBehaviour
             {
                 if (manual)
                 {
-                    if (playerInput.Player_Map.Shoot.WasPressedThisFrame() && Time.time > shotTime + maxShootRate)
+                    if (Shoot.action.WasPressedThisFrame() && Time.time > shotTime + maxShootRate)
                     {
                         if (curAmmo != 0)
                         {
@@ -83,7 +85,7 @@ public class Shooting : MonoBehaviour
                 }
                 else if (!shotGun)
                 {
-                    if (playerInput.Player_Map.Shoot.IsPressed() && Time.time > shotTime + shootRate)
+                    if (Shoot.action.IsPressed() && Time.time > shotTime + shootRate)
                     {
                         if (curAmmo != 0)
                         {
@@ -97,7 +99,7 @@ public class Shooting : MonoBehaviour
                 }
                 else
                 {
-                    if (playerInput.Player_Map.Shoot.WasPressedThisFrame() && Time.time > shotTime + maxShootRate2)
+                    if (Shoot.action.WasPressedThisFrame() && Time.time > shotTime + maxShootRate2)
                     {
                         if (curAmmo != 0)
                         {

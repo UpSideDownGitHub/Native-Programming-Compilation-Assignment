@@ -190,6 +190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35b26ac277506a4b836b25a94aa5e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  Shoot: {fileID: 545734340865680059, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   damage: 15
   melee: 1
   hitSpeed: 0.1
