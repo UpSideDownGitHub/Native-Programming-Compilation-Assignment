@@ -7,6 +7,7 @@ TagManager:
   - PICKUP
   - E_DAMAGE
   - P_DAMAGE
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public float acceleration = 8;
     public float stoppingDistance = 1;
     public bool autoBreak = true;
+    public bool canRotate = false;
     [Header("Player Tracking")]
     public Vector3 playerLastKnowPosition;
     public bool seenPlayer = false;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
     public Vector3[] path = new Vector3[0];
     public int currentPoint = 0;
     public float distanceToPoint = 0.1f;
+    public float wanderingStoppingDistance = 0;
 
     [Header("########## ATTACK ##########")]
     public float attackDistance;
@@ -35,6 +37,7 @@ public class Enemy : MonoBehaviour
     [Header("Cone Of Vision")]
     public float minSightAngle = 45;
     public float maxSightDistance = 10;
+    private int layerMask;
 
 
     [Header("--------------------")]
@@ -67,6 +70,9 @@ public class Enemy : MonoBehaviour
         _agent.acceleration = acceleration;
         _agent.stoppingDistance = stoppingDistance;
         _agent.autoBraking = autoBreak;
+
+        layerMask = 1 << 2;
+        layerMask = ~layerMask;
     }
 
     // Update is called once per frame
@@ -75,23 +81,43 @@ public class Enemy : MonoBehaviour
         // CALCULATE ANGLE TO PLAYER
         Vector3 targetDir = _player.transform.position - transform.position;
         float angle = Vector3.Angle(targetDir, transform.forward);
+
+        canRotate = false;
+        if (Vector3.Distance(_player.transform.position, transform.position) < stoppingDistance)
+            canRotate = true;
+
         // IF ANGLE WITHING ALLOWED RANGE
-        if (angle < minSightAngle)
+        if (angle < minSightAngle || canRotate)
         {
             // CHECK IF THERE IS A LINE OF SIGHT TO THE PLAYER
             RaycastHit hit;
             Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red, 2);
-            if (Physics.Raycast(transform.position, _player.transform.position - transform.position, out hit, maxSightDistance))
+            if (Physics.Raycast(transform.position, targetDir, out hit, maxSightDistance, layerMask))
             {
+                
                 // IF THERE IS A LINE OF SIGHT TO THE PLAYER
-                if (hit.collider.gameObject.CompareTag("Player"))
+                if (hit.transform.gameObject.tag == "Player")
                 {
+                    Debug.Log(hit.transform);
                     followingPlayer = true;
 
                     // MOVE TO PLAYER POSITION
                     seenPlayer = true;
                     playerLastKnowPosition = _player.transform.position;
+
+                    _agent.stoppingDistance = stoppingDistance;
+                    if (melee)
+                        _agent.stoppingDistance = meleeStoppingDistance;
+
                     _agent.SetDestination(playerLastKnowPosition);
+
+                    if (canRotate)
+                    {
+                        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDir, 1, 1);
+                        transform.rotation = Quaternion.LookRotation(newDirection);
+                    }
+
+
                     // ATTACK
                     if (Vector3.Distance(transform.position, _player.transform.position) < attackDistance)
                     {
@@ -110,6 +136,7 @@ public class Enemy : MonoBehaviour
         }
         else
             followingPlayer = false;
+
         // MOVE TO THE PLAYERS LAST KWNO POSITION (WHERE YOU LAST SAW/HEARD THE PLAYER)
         if (seenPlayer && !followingPlayer)
         {
@@ -121,6 +148,7 @@ public class Enemy : MonoBehaviour
         // MOVE TO THE ORIGNAL POSITION AND CONTINUE WANDERING
         else if (!followingPlayer)
         {
+            _agent.stoppingDistance = wanderingStoppingDistance;
             _agent.SetDestination(path[currentPoint]);
             if (Vector3.Distance(transform.position, path[currentPoint]) < distanceToPoint)
             {

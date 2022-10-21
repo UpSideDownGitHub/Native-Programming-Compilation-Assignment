@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public float maxHealth;
     public float curHealth;
+
     public void OnEnable()
     {
         curHealth = maxHealth;

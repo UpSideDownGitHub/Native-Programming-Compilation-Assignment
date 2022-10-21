@@ -9,6 +9,9 @@ public class Shooting : MonoBehaviour
     public PlayerInput playerInput;
     public InputActionReference Shoot;
 
+    [Header("Sound")]
+    public float soundDistance;
+
     [Header("Bullet")]
     public float damage;
 
@@ -61,10 +64,12 @@ public class Shooting : MonoBehaviour
                     col.enabled = false;
                 }
                 if (Shoot.action.WasPressedThisFrame() && Time.time > shotTime + hitCoolDown)
-                {
+                { 
                     once = true;
                     col.enabled = true;
                     shotTime = Time.time;
+
+                    makeSound();
                 }
             }
             else
@@ -80,6 +85,8 @@ public class Shooting : MonoBehaviour
                             GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                             _temp.GetComponent<INFO>().damage = damage;
+
+                            makeSound();
                         }
                     }
                 }
@@ -94,6 +101,8 @@ public class Shooting : MonoBehaviour
                             GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                             _temp.GetComponent<INFO>().damage = damage;
+
+                            makeSound();
                         }
                     }
                 }
@@ -111,10 +120,25 @@ public class Shooting : MonoBehaviour
                                 GameObject _temp = Instantiate(bullet, firePoint.transform.position, _rot);
                                 _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                                 _temp.GetComponent<INFO>().damage = damage;
+
+                                makeSound();
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public void makeSound()
+    {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            if (Vector3.Distance(enemys[i].transform.position, transform.position) < soundDistance)
+            {
+                enemys[i].GetComponent<Enemy>().Hearing(transform.position);
             }
         }
     }

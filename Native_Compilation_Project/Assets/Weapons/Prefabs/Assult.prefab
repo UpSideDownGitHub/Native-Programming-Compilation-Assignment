@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
   Shoot: {fileID: 545734340865680059, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  soundDistance: 10
   damage: 5
   melee: 0
   hitSpeed: 0
