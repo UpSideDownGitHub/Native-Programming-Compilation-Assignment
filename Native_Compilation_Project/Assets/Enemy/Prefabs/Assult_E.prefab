@@ -265,8 +265,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20fe23c0ff23254aa54090e3a952265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 1
   curHealth: 0
+  fists: 0
+  gunToDrop: {fileID: 3367507303112244616, guid: c4ec3d8201d3c8b4ea48a69c38faf8df, type: 3}
+  enemy: {fileID: 0}
+  maxForce: 300
+  minForce: 200
+  maxTorque: 250
+  minTorque: -250
 --- !u!114 &6029383841870310678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,7 +309,7 @@ MonoBehaviour:
   minSightAngle: 45
   maxSightDistance: 20
   melee: 0
-  meleeAttackDistance: 0
+  meleeAttackDistance: 1
   minAngle: 25
   meleeStoppingDistance: 1.5
   auto: 1

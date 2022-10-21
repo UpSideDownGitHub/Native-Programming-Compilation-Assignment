@@ -7,9 +7,22 @@ public class EnemyHealth : MonoBehaviour
     public float maxHealth;
     public float curHealth;
 
+    [Header("Droping Weapon")]
+    public bool fists;
+    public GameObject gunToDrop;
+    public Enemy enemy;
+
+    public float maxForce;
+    public float minForce;
+    public float maxTorque;
+    public float minTorque;
+
+    private bool alreadyDropped = false;
+
     public void OnEnable()
     {
         curHealth = maxHealth;
+        enemy = GetComponent<Enemy>();
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -27,10 +40,19 @@ public class EnemyHealth : MonoBehaviour
             curHealth -= damage;
         else
         {
-            // kill the enemy
-            // TEMP FOR TESTING
-            Debug.Log("THE ENEMY HAS BEEN KILLED");
-            curHealth = maxHealth;
+            if (!alreadyDropped)
+            {
+                alreadyDropped = true;
+                if (!fists)
+                {
+                    GameObject _temp2 = Instantiate(gunToDrop, enemy.firePoint.transform.position, enemy.firePoint.transform.rotation);
+                    _temp2.GetComponent<ID>().curAmmo = enemy.curAmmo;
+                    _temp2.GetComponent<ID>().pickup = true;
+                    _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
+                    _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
+                }
+                Destroy(gameObject);
+            }
         }
         
     }

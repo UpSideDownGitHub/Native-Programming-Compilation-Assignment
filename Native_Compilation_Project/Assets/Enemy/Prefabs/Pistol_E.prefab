@@ -265,8 +265,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20fe23c0ff23254aa54090e3a952265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 1
   curHealth: 0
+  fists: 0
+  gunToDrop: {fileID: 9037307327468426062, guid: 395346f53c0ad114fa1963ad67aacb03, type: 3}
+  enemy: {fileID: 0}
+  maxForce: 300
+  minForce: 200
+  maxTorque: 250
+  minTorque: -250
 --- !u!114 &1722179812855882988
 MonoBehaviour:
   m_ObjectHideFlags: 0

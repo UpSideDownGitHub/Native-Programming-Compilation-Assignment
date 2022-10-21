@@ -278,6 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  currentScene: 1
 --- !u!114 &382841195
 MonoBehaviour:
   m_ObjectHideFlags: 0
