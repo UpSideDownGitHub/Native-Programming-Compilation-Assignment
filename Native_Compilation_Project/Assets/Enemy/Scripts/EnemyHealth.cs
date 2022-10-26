@@ -32,6 +32,10 @@ public class EnemyHealth : MonoBehaviour
             takeDamage(collision.gameObject.GetComponent<INFO>().damage);
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("E_DAMAGE_MELEE"))
+        {
+            takeDamage(collision.gameObject.GetComponent<INFO>().damage);
+        }
     }
 
     public void takeDamage(float damage)

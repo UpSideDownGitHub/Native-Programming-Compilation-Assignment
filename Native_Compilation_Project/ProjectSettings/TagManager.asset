@@ -8,6 +8,7 @@ TagManager:
   - E_DAMAGE
   - P_DAMAGE
   - Enemy
+  - E_DAMAGE_MELEE
   layers:
   - Default
   - TransparentFX

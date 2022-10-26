@@ -91,14 +91,14 @@ public class Enemy : MonoBehaviour
         {
             // CHECK IF THERE IS A LINE OF SIGHT TO THE PLAYER
             RaycastHit hit;
-            Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red, 2);
+            //Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red, 2);
             if (Physics.Raycast(transform.position, targetDir, out hit, maxSightDistance, layerMask))
             {
                 
                 // IF THERE IS A LINE OF SIGHT TO THE PLAYER
                 if (hit.transform.gameObject.tag == "Player")
                 {
-                    Debug.Log(hit.transform);
+                    //Debug.Log(hit.transform);
                     followingPlayer = true;
 
                     // MOVE TO PLAYER POSITION

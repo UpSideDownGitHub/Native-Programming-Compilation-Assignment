@@ -43,7 +43,10 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(_temp);
         }
         else
-            transform.rotation = Quaternion.LookRotation(prevRotation);
+        {
+            if (prevRotation != Vector3.zero)
+                transform.rotation = Quaternion.LookRotation(prevRotation);
+        }
     }
     
     public void LateUpdate()
