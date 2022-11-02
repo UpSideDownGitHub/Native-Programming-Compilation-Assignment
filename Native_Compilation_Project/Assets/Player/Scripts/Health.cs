@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
+    public Collider col;
     public float maxHealth;
     public float currentHealth;
     public int currentScene = 1;
@@ -16,6 +17,7 @@ public class Health : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
+        //col.is
         if (collision.gameObject.CompareTag("P_DAMAGE"))
         {
             changeHealth(-collision.gameObject.GetComponent<INFO>().damage);

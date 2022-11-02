@@ -97,7 +97,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 94f4c2ac0f986e247acedaddcbe94f82, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   weaponID: 2
   pickup: 1
   curAmmo: 6
+  maxAmmo: 6
 --- !u!114 &5732054841107921575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +179,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   Shoot: {fileID: 545734340865680059, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   soundDistance: 15
+  ammoText: {fileID: 0}
   damage: 10
   melee: 0
   hitSpeed: 0

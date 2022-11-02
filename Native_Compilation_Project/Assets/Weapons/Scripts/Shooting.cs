@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Shooting : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Shooting : MonoBehaviour
 
     [Header("Sound")]
     public float soundDistance;
+
+    [Header("Ammo Count")]
+    public TMP_Text ammoText;
 
     [Header("Bullet")]
     public float damage;
@@ -47,6 +51,7 @@ public class Shooting : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        ammoText = GameObject.Find("Ammo Count").GetComponent<TMP_Text>();
         playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().playerInput;
         shotTime = 0;
     }
@@ -85,7 +90,7 @@ public class Shooting : MonoBehaviour
                             GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                             _temp.GetComponent<INFO>().damage = damage;
-
+                            ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
                             makeSound();
                         }
                     }
@@ -101,7 +106,7 @@ public class Shooting : MonoBehaviour
                             GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                             _temp.GetComponent<INFO>().damage = damage;
-
+                            ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
                             makeSound();
                         }
                     }
@@ -123,6 +128,7 @@ public class Shooting : MonoBehaviour
 
                                 makeSound();
                             }
+                            ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
                         }
                     }
                 }

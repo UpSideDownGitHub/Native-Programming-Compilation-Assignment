@@ -194,6 +194,7 @@ public class Enemy : MonoBehaviour
                         GameObject _temp = Instantiate(bullet, firePoint.transform.position, _rot);
                         _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                         _temp.GetComponent<INFO>().damage = damage;
+                        Physics.IgnoreCollision(_temp.GetComponent<Collider>(), _player.GetComponent<PickupColliderID>().col);
                     }
                 }
                 else
@@ -212,6 +213,7 @@ public class Enemy : MonoBehaviour
                     GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                     _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                     _temp.GetComponent<INFO>().damage = damage;
+                    Physics.IgnoreCollision(_temp.GetComponent<Collider>(), _player.GetComponent<PickupColliderID>().col);
                 }
                 else
                 {

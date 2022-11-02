@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class WeaponPickup : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class WeaponPickup : MonoBehaviour
     [Header("Fists")]
     public GameObject fists;
 
+    [Header("Ammo UI")]
+    public TMP_Text ammoText;
+
     public void Awake()
     {
         col = this.GetComponent<SphereCollider>();
@@ -39,6 +43,7 @@ public class WeaponPickup : MonoBehaviour
     {
         playerInput = playermovement.playerInput;
         fists.SetActive(true);
+        ammoText.text = "";
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -77,6 +82,7 @@ public class WeaponPickup : MonoBehaviour
             if (items.Count > 0)
             {
                 fists.SetActive(false);
+                // throw old weapon
                 if (currentWeapon != null)
                 {
                     GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
@@ -86,6 +92,7 @@ public class WeaponPickup : MonoBehaviour
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                     Destroy(currentWeapon);
                 }
+                // spawning new weapon
                 GameObject _temp = Instantiate(weapons[items[0].gameObject.GetComponent<ID>().weaponID], spawnPosition);
                 _temp.GetComponent<ID>().pickup = false;
                 Destroy(_temp.GetComponent<Rigidbody>());
@@ -93,7 +100,30 @@ public class WeaponPickup : MonoBehaviour
                 currentWeapon.GetComponent<Shooting>().curAmmo = items[0].gameObject.GetComponent<ID>().curAmmo;
                 Destroy(items[0].gameObject);
                 items.RemoveAt(0);
+
+                // update UI to show new ammo count
+                // if melee weapon
+                if (_temp.GetComponent<ID>().weaponID >= 3 && _temp.GetComponent<ID>().weaponID <= 5)
+                {
+                    // dont show ammo count
+                    ammoText.text = "";
+                }
+                // ranged weapon
+                else
+                {
+                    ammoText.text = currentWeapon.GetComponent<Shooting>().curAmmo.ToString() + "/" + _temp.GetComponent<ID>().maxAmmo.ToString();
+                }
             }
         }
     }
 }
+
+
+/*
+ * 0 - Pistol
+ * 1 - Assult
+ * 2 - Shotgun
+ * 3 - Fist
+ * 4 - Knife
+ * 5 - Bat
+*/
