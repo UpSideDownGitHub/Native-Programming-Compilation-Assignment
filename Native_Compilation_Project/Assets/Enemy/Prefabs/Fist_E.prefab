@@ -146,6 +146,7 @@ MonoBehaviour:
   minForce: 200
   maxTorque: 250
   minTorque: -250
+  score: 500
 --- !u!114 &2706997711847805789
 MonoBehaviour:
   m_ObjectHideFlags: 0

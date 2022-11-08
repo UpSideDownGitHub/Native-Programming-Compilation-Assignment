@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - E_DAMAGE_MELEE
   - IGNORE
+  - ScoreManager
   layers:
   - Default
   - TransparentFX

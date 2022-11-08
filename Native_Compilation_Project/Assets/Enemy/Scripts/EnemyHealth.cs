@@ -17,12 +17,17 @@ public class EnemyHealth : MonoBehaviour
     public float maxTorque;
     public float minTorque;
 
+    [Header("Score")]
+    public int score;
+    private ScoreManager scoreManager;
+
     private bool alreadyDropped = false;
 
     public void OnEnable()
     {
         curHealth = maxHealth;
         enemy = GetComponent<Enemy>();
+        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -56,6 +61,9 @@ public class EnemyHealth : MonoBehaviour
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                 }
                 Destroy(gameObject);
+
+                // increase score by the ammount this enemy adds (specific to each enemy)
+                scoreManager.changeScore(score);
             }
         }
         
