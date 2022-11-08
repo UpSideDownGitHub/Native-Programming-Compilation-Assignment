@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent _agent;
     private GameObject _player;
 
+    [Header("########## VISUALS ##########")]
+    public GameObject shotParticleEffect;
+
     [Header("########## MOVEMENT ##########")]
     [Header("Nav Mesh Agent")]
     public float speed = 3.5f;
@@ -196,6 +199,8 @@ public class Enemy : MonoBehaviour
                         _temp.GetComponent<INFO>().damage = damage;
                         Physics.IgnoreCollision(_temp.GetComponent<Collider>(), _player.GetComponent<PickupColliderID>().col);
                     }
+                    GameObject particle = Instantiate(shotParticleEffect, firePoint.transform.position, firePoint.transform.rotation);
+                    Destroy(particle, 2);
                 }
                 else
                 {
@@ -214,6 +219,9 @@ public class Enemy : MonoBehaviour
                     _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                     _temp.GetComponent<INFO>().damage = damage;
                     Physics.IgnoreCollision(_temp.GetComponent<Collider>(), _player.GetComponent<PickupColliderID>().col);
+
+                    GameObject particle = Instantiate(shotParticleEffect, firePoint.transform.position, firePoint.transform.rotation);
+                    Destroy(particle, 2);
                 }
                 else
                 {

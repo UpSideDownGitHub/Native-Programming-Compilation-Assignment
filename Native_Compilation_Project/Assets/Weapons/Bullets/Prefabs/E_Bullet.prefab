@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3c5b80ae228198740864a97130985360, type: 2}
+  - {fileID: 2100000, guid: 726a3ba72fff745429e926e722c6795b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,3 +142,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleEffect: {fileID: 3343651401304420960, guid: 512bfbfecb10a3b43aa0ac80d321c6de, type: 3}
+  BLOODDECALTEST: {fileID: 3686098791815958893, guid: f9b6818d23acfa245981f90790fbf478, type: 3}

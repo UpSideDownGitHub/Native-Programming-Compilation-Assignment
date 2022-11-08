@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.InputSystem.iOS;
+using System.Diagnostics.CodeAnalysis;
 
 public class Shooting : MonoBehaviour
 {
@@ -12,6 +14,14 @@ public class Shooting : MonoBehaviour
 
     [Header("Sound")]
     public float soundDistance;
+
+    [Header("Effects")]
+    public GameObject shotParticle;
+    public float camShakeDuration = 0.45f;
+    public float camShakeStrength = 5f;
+    public float shakeAmmount = 0.1f;
+    [Range(0, 1)]
+    public float strength = 0.5f; 
 
     [Header("Ammo Count")]
     public TMP_Text ammoText;
@@ -74,6 +84,8 @@ public class Shooting : MonoBehaviour
                     col.enabled = true;
                     shotTime = Time.time;
 
+                    StartCoroutine(controllerShake());
+
                     makeSound();
                 }
             }
@@ -91,6 +103,14 @@ public class Shooting : MonoBehaviour
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                             _temp.GetComponent<INFO>().damage = damage;
                             ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
+
+                            GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
+                            Destroy(particle, 1);
+
+                            Camera.main.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
+
+                            StartCoroutine(controllerShake());
+
                             makeSound();
                         }
                     }
@@ -107,6 +127,14 @@ public class Shooting : MonoBehaviour
                             _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                             _temp.GetComponent<INFO>().damage = damage;
                             ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
+
+                            GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
+                            Destroy(particle, 1);
+
+                            Camera.main.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
+
+                            StartCoroutine(controllerShake());
+
                             makeSound();
                         }
                     }
@@ -126,14 +154,31 @@ public class Shooting : MonoBehaviour
                                 _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                                 _temp.GetComponent<INFO>().damage = damage;
 
-                                makeSound();
+                                
                             }
+
+                            GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
+                            Destroy(particle, 1);
+
+                            Camera.main.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
+
+                            makeSound();
+
+                            StartCoroutine(controllerShake());
+
                             ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
                         }
                     }
                 }
             }
         }
+    }
+
+    public IEnumerator controllerShake()
+    {
+        Gamepad.current.SetMotorSpeeds(strength, strength);
+        yield return new WaitForSeconds(shakeAmmount);
+        Gamepad.current.ResetHaptics();
     }
 
     public void makeSound()

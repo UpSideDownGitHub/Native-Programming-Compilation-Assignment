@@ -21,6 +21,11 @@ public class EnemyHealth : MonoBehaviour
     public int score;
     private ScoreManager scoreManager;
 
+    [Header("Decals")]
+    public int[] ammountToSpawn;
+    public float[] range;
+    public GameObject bloodDecal;
+
     private bool alreadyDropped = false;
 
     public void OnEnable()
@@ -64,6 +69,15 @@ public class EnemyHealth : MonoBehaviour
 
                 // increase score by the ammount this enemy adds (specific to each enemy)
                 scoreManager.changeScore(score);
+
+                // make the blood decals show on the floor
+                for (int i = 0; i < Random.Range(ammountToSpawn[0], ammountToSpawn[1]); i++)
+                {
+                    Vector3 pos = transform.position;
+                    pos = new Vector3(pos.x + Random.Range(range[0], range[1]), pos.y, pos.z + Random.Range(range[2], range[3]));
+                    Instantiate(bloodDecal, pos, Quaternion.Euler(90, 0, 0));
+                }
+                
             }
         }
         
