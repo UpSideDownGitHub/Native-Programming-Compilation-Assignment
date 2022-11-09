@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.InputSystem.iOS;
-using System.Diagnostics.CodeAnalysis;
+//using UnityEngine.InputSystem.iOS;
+//using System.Diagnostics.CodeAnalysis;
 
 public class Shooting : MonoBehaviour
 {
