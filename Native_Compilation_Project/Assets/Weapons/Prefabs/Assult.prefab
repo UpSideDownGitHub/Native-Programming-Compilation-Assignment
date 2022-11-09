@@ -149,10 +149,10 @@ MonoBehaviour:
   Shoot: {fileID: 545734340865680059, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
   soundDistance: 10
   shotParticle: {fileID: 6118084653027632576, guid: 10a454588b8a42043b9619aea77c70a1, type: 3}
-  camShakeDuration: 0.45
-  camShakeStrength: 0.75
+  camShakeDuration: 0.2
+  camShakeStrength: 2
   shakeAmmount: 0.1
-  strength: 0.5
+  strength: 1
   ammoText: {fileID: 0}
   damage: 5
   melee: 0
