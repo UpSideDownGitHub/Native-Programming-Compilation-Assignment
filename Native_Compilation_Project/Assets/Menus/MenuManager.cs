@@ -28,6 +28,7 @@ public class MenuManager : MonoBehaviour
     public GameObject sorter;
     public float moveAmmount;
     public int curLevel;
+    public int[] currentLevelSceneIndex;
     private bool prematureUpdateCall = false;
 
     [Header("Level Info Screen")]
@@ -61,6 +62,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        moveAmmount = Screen.width;
         curSelected = 0;
         curLevel = 0;
 
@@ -149,7 +151,7 @@ public class MenuManager : MonoBehaviour
             {
                 levelSelectScreen.SetActive(false);
                 levelInfo.SetActive(true);
-                level = curLevel;
+                level = currentLevelSceneIndex[curLevel];
             }
         }
         else if (levelInfo.activeInHierarchy)
@@ -170,8 +172,8 @@ public class MenuManager : MonoBehaviour
             }
             else if (A.action.WasPressedThisFrame())
             {
-                SceneManager.LoadSceneAsync(level + 1);
-                Debug.Log("LOAD LEVEL: " + (level + 1).ToString());
+                SceneManager.LoadSceneAsync(level);
+                Debug.Log("LOAD LEVEL: " + (level).ToString());
             }
         }
         else if (settingsScreen.activeInHierarchy && !prematureUpdateCall)
@@ -189,18 +191,16 @@ public class MenuManager : MonoBehaviour
                 else if (settingsControlOptions.activeInHierarchy)
                 {
                     if (Up.action.WasPressedThisFrame() && (curControlSetting == 1 ||
-                                                           curControlSetting == 2 ||
-                                                           curControlSetting == 4))
+                                                           curControlSetting == 3))
                         curControlSetting--;
                     else if (Down.action.WasPressedThisFrame() && (curControlSetting == 0 ||
-                                                                                  curControlSetting == 1 ||
-                                                                                  curControlSetting == 3))
+                                                                   curControlSetting == 2))
                         curControlSetting++;
-                    else if (Right.action.WasPressedThisFrame() && (curControlSetting == 1 ||
-                                                                                  curControlSetting == 2))
+                    else if (Right.action.WasPressedThisFrame() && (curControlSetting == 0 ||
+                                                                    curControlSetting == 1))
                         curControlSetting += 2;
-                    else if (Left.action.WasPressedThisFrame() && (curControlSetting == 3 ||
-                                                                                  curControlSetting == 4))
+                    else if (Left.action.WasPressedThisFrame() && (curControlSetting == 2 ||
+                                                                   curControlSetting == 3))
                         curControlSetting -= 2;
 
                     EventSystem.current.SetSelectedGameObject(null);

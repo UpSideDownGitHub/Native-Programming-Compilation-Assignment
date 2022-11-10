@@ -28,6 +28,7 @@ public class inGameManager : MonoBehaviour
     {
         //activeDevice = null;
         activeDevice = Gamepad.current;
+        canPause = true;
         //print(activeDevice);
         InputSystem.onDeviceChange += (device, change) =>
         {

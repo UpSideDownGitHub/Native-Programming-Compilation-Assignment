@@ -48,6 +48,7 @@ public class PauseMenu : MonoBehaviour
     public void menuButton()
     {
         Time.timeScale = 1f;
+        Destroy(GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>().gameObject);
         SceneManager.LoadScene(0);
     }
     public void exitButton()
