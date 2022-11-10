@@ -6,7 +6,6 @@ using UnityEngine.InputSystem.Utilities;
 
 public class PlayerMovement : MonoBehaviour
 {
-    #region VARIABLES
     [Header("Movement")]
     public float movementSpeed = 10f;
     public float smoothValue = 0.2f;
@@ -22,7 +21,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Rotation")]
     public float strength = 5;
     public Vector3 prevRotation;
-    #endregion
+
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip walkingSound;
+
 
     private void Awake()
     {
@@ -54,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 _vec2 = Movement.action.ReadValue<Vector2>();
         if (_vec2 != Vector2.zero)
         {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
             Vector3 _moveInput = new Vector3(_vec2.x, 0, _vec2.y);
             Vector3 zero = Vector3.zero;
             if (Dodge.action.WasPressedThisFrame())
@@ -65,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            audioSource.Stop();
             _rb.velocity = Vector2.zero;
         }
     }

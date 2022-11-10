@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("########## PLAYER ##########")]
     private NavMeshAgent _agent;
-    private GameObject _player;
+    public GameObject _player;
 
     [Header("########## VISUALS ##########")]
     public GameObject shotParticleEffect;

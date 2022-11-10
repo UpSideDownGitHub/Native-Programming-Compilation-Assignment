@@ -21,7 +21,10 @@ public class Shooting : MonoBehaviour
     public float camShakeStrength = 5f;
     public float shakeAmmount = 0.1f;
     [Range(0, 1)]
-    public float strength = 0.5f; 
+    public float strength = 0.5f;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip clip;
 
     [Header("Ammo Count")]
     public TMP_Text ammoText;
@@ -87,7 +90,7 @@ public class Shooting : MonoBehaviour
                     shotTime = Time.time;
 
                     StartCoroutine(controllerShake());
-
+                    audioSource.PlayOneShot(clip);
                     makeSound();
                 }
             }
@@ -115,6 +118,8 @@ public class Shooting : MonoBehaviour
 
                             makeSound();
 
+                            audioSource.PlayOneShot(clip);
+
                             gameManager.shots++;
                         }
                     }
@@ -140,6 +145,8 @@ public class Shooting : MonoBehaviour
                             StartCoroutine(controllerShake());
 
                             makeSound();
+
+                            audioSource.PlayOneShot(clip);
 
                             gameManager.shots++;
                         }
@@ -169,6 +176,8 @@ public class Shooting : MonoBehaviour
                             Camera.main.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
 
                             makeSound();
+
+                            audioSource.PlayOneShot(clip);
 
                             gameManager.shots++;
 

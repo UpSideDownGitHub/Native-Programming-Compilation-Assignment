@@ -26,6 +26,10 @@ public class EnemyHealth : MonoBehaviour
     public float[] range;
     public GameObject bloodDecal;
 
+    [Header("Sounds")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClips;
+
     private bool alreadyDropped = false;
 
     private GameManager gameManager;
@@ -46,6 +50,8 @@ public class EnemyHealth : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("E_DAMAGE_MELEE"))
         {
+            Debug.Log(audioClips[collision.gameObject.GetComponent<INFO>().meleeID]);
+            enemy._player.GetComponent<AudioSource>().PlayOneShot(audioClips[collision.gameObject.GetComponent<INFO>().meleeID], 1f);
             takeDamage(collision.gameObject.GetComponent<INFO>().damage);
         }
     }
