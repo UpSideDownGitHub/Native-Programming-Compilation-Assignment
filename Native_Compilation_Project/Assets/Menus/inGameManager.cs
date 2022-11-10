@@ -13,6 +13,7 @@ public class inGameManager : MonoBehaviour
     [Header("UI's")]
     public GameObject scoreUI;
     public GameObject pauseUI;
+    public GameObject endUI;
 
     [Header("Scripts")]
     public PauseMenu pauseMenu;
@@ -20,6 +21,8 @@ public class inGameManager : MonoBehaviour
     [Header("Device Connections")]
     public InputDevice activeDevice = null;
     public GameObject controllerDisconnectedWarning;
+
+    public bool canPause;
 
     public void OnEnable()
     {
@@ -39,21 +42,27 @@ public class inGameManager : MonoBehaviour
                     //Debug.Log("Device removed: " + device);
                     if (device == activeDevice)
                     {
-                        controllerDisconnectedWarning.SetActive(true);
-                        openPauseMenu();
+                        if (canPause)
+                        {
+                            controllerDisconnectedWarning.SetActive(true);
+                            openPauseMenu();
+                        }
                     }
                     break;
             }
         };
     }
 
-    
+
 
     public void Update()
     {
         if (pauseButton.action.WasPressedThisFrame() && scoreUI.activeInHierarchy)
         {
-            openPauseMenu();
+            if (canPause)
+            {
+                openPauseMenu();
+            }
         }
     }
 

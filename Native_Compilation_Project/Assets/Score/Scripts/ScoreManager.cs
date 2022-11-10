@@ -9,8 +9,11 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text scoreText;
     public int score;
 
+    private GameManager gameManager;
+
     public void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>();
         scoreText.text = "Score: " + score.ToString();
     }
 
@@ -18,5 +21,6 @@ public class ScoreManager : MonoBehaviour
     {
         score += ammount;
         scoreText.text = "Score: " + score.ToString();
+        gameManager.score = score;
     }
 }

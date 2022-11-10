@@ -58,10 +58,12 @@ public class Shooting : MonoBehaviour
     public int bulletAmmout;
     public float deviation;
 
-    // Start is called before the first frame update
+    private GameManager gameManager;
+
     public void Start()
     {
-        ammoText = GameObject.Find("Ammo Count").GetComponent<TMP_Text>();
+        gameManager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>();
+        ammoText = GameObject.FindGameObjectWithTag("Ammo_Count").GetComponent<TMP_Text>();
         playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().playerInput;
         shotTime = 0;
     }
@@ -112,6 +114,8 @@ public class Shooting : MonoBehaviour
                             StartCoroutine(controllerShake());
 
                             makeSound();
+
+                            gameManager.shots++;
                         }
                     }
                 }
@@ -136,6 +140,8 @@ public class Shooting : MonoBehaviour
                             StartCoroutine(controllerShake());
 
                             makeSound();
+
+                            gameManager.shots++;
                         }
                     }
                 }
@@ -163,6 +169,8 @@ public class Shooting : MonoBehaviour
                             Camera.main.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
 
                             makeSound();
+
+                            gameManager.shots++;
 
                             StartCoroutine(controllerShake());
 

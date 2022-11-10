@@ -11,6 +11,8 @@ TagManager:
   - E_DAMAGE_MELEE
   - IGNORE
   - ScoreManager
+  - MANAGER
+  - Ammo_Count
   layers:
   - Default
   - TransparentFX

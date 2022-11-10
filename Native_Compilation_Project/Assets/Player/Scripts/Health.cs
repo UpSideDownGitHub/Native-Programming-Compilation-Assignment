@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
@@ -10,8 +11,12 @@ public class Health : MonoBehaviour
     public float currentHealth;
     public int currentScene = 1;
 
+    private GameManager gameManager;
+
     public void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>();
+        currentScene = gameManager.currentFloor + gameManager.currentSceneIndex;
         currentHealth = maxHealth;
     }
 
@@ -31,6 +36,8 @@ public class Health : MonoBehaviour
             currentHealth += ammount;
         else
         {
+            gameManager.deaths++;
+            Gamepad.current.ResetHaptics();
             SceneManager.LoadSceneAsync(currentScene);
         }
     }

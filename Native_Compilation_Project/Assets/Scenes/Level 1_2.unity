@@ -1558,7 +1558,7 @@ RectTransform:
   - {fileID: 1975931692}
   - {fileID: 1433238309}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2237,7 +2237,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &173937374 stripped
 Transform:
@@ -7975,7 +7975,7 @@ Transform:
   - {fileID: 1540867236}
   - {fileID: 661655424}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &382841192
 MonoBehaviour:
@@ -9903,7 +9903,7 @@ RectTransform:
   m_Children:
   - {fileID: 1506703979}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9935,7 +9935,7 @@ MonoBehaviour:
   - {fileID: 1359087753}
   - {fileID: 1373394916}
   ingamemanager: {fileID: 1578612322}
-  gameManager: {fileID: 498877920}
+  gameManager: {fileID: 0}
   kills: {fileID: 1195575039}
   shots: {fileID: 1514805737}
   accuracy: {fileID: 1044869162}
@@ -11459,64 +11459,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &498877919
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 498877921}
-  - component: {fileID: 498877920}
-  m_Layer: 0
-  m_Name: Manager
-  m_TagString: MANAGER
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &498877920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498877919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94735f05b4fc1414f9e22ff2d79e59c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentSceneIndex: 0
-  currentFloor: 0
-  maxFloor: 1
-  stairsEnabled: 0
-  currentEnemies: 0100000000000000
-  endScreen: {fileID: 431647116}
-  pauseMenu: {fileID: 897056670}
-  inGameUI: {fileID: 117843974}
-  kills: 0
-  shots: 0
-  deaths: 0
-  score: 0
-  startTime: 0
-  finishTime: 0
---- !u!4 &498877921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498877919}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 96.80089, y: -235.12294, z: 207.10165}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &541069342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16389,7 +16331,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &741922067
 Mesh:
@@ -19890,7 +19832,7 @@ Transform:
   - {fileID: 72014997}
   - {fileID: 1459241014}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883756808
 GameObject:
@@ -20330,7 +20272,7 @@ RectTransform:
   m_Children:
   - {fileID: 1839927295}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -24224,7 +24166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1154374418
 MonoBehaviour:
@@ -34176,7 +34118,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1578612321
 MonoBehaviour:

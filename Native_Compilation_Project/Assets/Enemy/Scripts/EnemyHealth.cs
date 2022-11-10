@@ -28,8 +28,10 @@ public class EnemyHealth : MonoBehaviour
 
     private bool alreadyDropped = false;
 
+    private GameManager gameManager;
     public void OnEnable()
     {
+        gameManager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>();
         curHealth = maxHealth;
         enemy = GetComponent<Enemy>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
@@ -66,6 +68,9 @@ public class EnemyHealth : MonoBehaviour
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                 }
                 Destroy(gameObject);
+                // add a kill to the kill count && decrease the ammount of enemys left on this floor/level
+                gameManager.kills++;
+                gameManager.currentEnemies[gameManager.currentFloor]--;
 
                 // increase score by the ammount this enemy adds (specific to each enemy)
                 scoreManager.changeScore(score);
