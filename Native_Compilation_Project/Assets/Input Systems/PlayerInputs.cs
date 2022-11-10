@@ -80,6 +80,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c9b66d8-0bf8-4876-85f2-3d31fce3d59e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -269,6 +278,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72a7b33c-ebe7-434f-9161-b9202ca2c26f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -455,6 +475,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_Map_Throw = m_Player_Map.FindAction("Throw", throwIfNotFound: true);
         m_Player_Map_Shoot = m_Player_Map.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Map_Dodge = m_Player_Map.FindAction("Dodge", throwIfNotFound: true);
+        m_Player_Map_Pause = m_Player_Map.FindAction("Pause", throwIfNotFound: true);
         // Menus_Map
         m_Menus_Map = asset.FindActionMap("Menus_Map", throwIfNotFound: true);
         m_Menus_Map_Up = m_Menus_Map.FindAction("Up", throwIfNotFound: true);
@@ -528,6 +549,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map_Throw;
     private readonly InputAction m_Player_Map_Shoot;
     private readonly InputAction m_Player_Map_Dodge;
+    private readonly InputAction m_Player_Map_Pause;
     public struct Player_MapActions
     {
         private @PlayerInputs m_Wrapper;
@@ -538,6 +560,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @Throw => m_Wrapper.m_Player_Map_Throw;
         public InputAction @Shoot => m_Wrapper.m_Player_Map_Shoot;
         public InputAction @Dodge => m_Wrapper.m_Player_Map_Dodge;
+        public InputAction @Pause => m_Wrapper.m_Player_Map_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -565,6 +588,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Dodge.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDodge;
+                @Pause.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -587,6 +613,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -672,6 +701,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnThrow(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IMenus_MapActions
     {

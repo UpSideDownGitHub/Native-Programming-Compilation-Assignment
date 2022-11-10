@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "PlayerInputs",
     "maps": [
         {
             "name": "Player_Map",
@@ -54,6 +54,15 @@
                     "name": "Dodge",
                     "type": "Button",
                     "id": "ed9b8d3c-985c-479e-8cd2-98ffc7e28786",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "6c9b66d8-0bf8-4876-85f2-3d31fce3d59e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -245,6 +254,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72a7b33c-ebe7-434f-9161-b9202ca2c26f",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
