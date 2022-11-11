@@ -34,6 +34,10 @@ public class WeaponPickup : MonoBehaviour
     [Header("Ammo UI")]
     public TMP_Text ammoText;
 
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip audioClip;
+
     public void Awake()
     {
         col = this.GetComponent<SphereCollider>();
@@ -75,6 +79,9 @@ public class WeaponPickup : MonoBehaviour
                 Destroy(currentWeapon);
                 currentWeapon = null;
                 fists.SetActive(true);
+                audioSource.PlayOneShot(audioClip);
+                ammoText.text = "Fist";
+
             }
         }
         if (Pickup.action.WasPressedThisFrame())
@@ -91,6 +98,8 @@ public class WeaponPickup : MonoBehaviour
                     _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                     Destroy(currentWeapon);
+                    audioSource.PlayOneShot(audioClip);
+
                 }
                 // spawning new weapon
                 GameObject _temp = Instantiate(weapons[items[0].gameObject.GetComponent<ID>().weaponID], spawnPosition);
@@ -103,11 +112,12 @@ public class WeaponPickup : MonoBehaviour
 
                 // update UI to show new ammo count
                 // if melee weapon
-                if (_temp.GetComponent<ID>().weaponID >= 3 && _temp.GetComponent<ID>().weaponID <= 5)
-                {
-                    // dont show ammo count
-                    ammoText.text = "";
-                }
+                if (_temp.GetComponent<ID>().weaponID == 3)
+                    ammoText.text = "Fist";
+                else if(_temp.GetComponent<ID>().weaponID == 4)
+                    ammoText.text = "Knife";
+                else if (_temp.GetComponent<ID>().weaponID == 5)
+                    ammoText.text = "Bat";
                 // ranged weapon
                 else
                 {

@@ -29,12 +29,20 @@ public class GameManager : MonoBehaviour
     public float startTime;
     public float finishTime;
 
+    private bool noSuicide;
+
     public void OnEnable()
     {
         DontDestroyOnLoad(this);
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         startTime = Time.time;
         stairsEnabled = false;
+
+        if (GameObject.FindGameObjectsWithTag("MANAGER").Length > 1 && !noSuicide)
+            Destroy(gameObject);
+        else
+            noSuicide = true;
+
     }
 
     public void Update()

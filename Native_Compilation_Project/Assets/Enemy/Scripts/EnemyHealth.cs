@@ -43,16 +43,19 @@ public class EnemyHealth : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("E_DAMAGE"))
+        if (!enemy.stop)
         {
-            takeDamage(collision.gameObject.GetComponent<INFO>().damage);
-            Destroy(collision.gameObject);
-        }
-        if (collision.gameObject.CompareTag("E_DAMAGE_MELEE"))
-        {
-            Debug.Log(audioClips[collision.gameObject.GetComponent<INFO>().meleeID]);
-            enemy._player.GetComponent<AudioSource>().PlayOneShot(audioClips[collision.gameObject.GetComponent<INFO>().meleeID], 1f);
-            takeDamage(collision.gameObject.GetComponent<INFO>().damage);
+            if (collision.gameObject.CompareTag("E_DAMAGE"))
+            {
+                takeDamage(collision.gameObject.GetComponent<INFO>().damage);
+                Destroy(collision.gameObject);
+            }
+            if (collision.gameObject.CompareTag("E_DAMAGE_MELEE"))
+            {
+                Debug.Log(audioClips[collision.gameObject.GetComponent<INFO>().meleeID]);
+                audioSource.PlayOneShot(audioClips[collision.gameObject.GetComponent<INFO>().meleeID], 1f);
+                takeDamage(collision.gameObject.GetComponent<INFO>().damage);
+            }
         }
     }
 
@@ -73,7 +76,10 @@ public class EnemyHealth : MonoBehaviour
                     _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                 }
-                Destroy(gameObject);
+                // DESTROY LATER SO CAN PLAY SOUND
+                GetComponent<MeshRenderer>().enabled = false;
+                enemy.stop = true;
+                Destroy(gameObject, 1);
                 // add a kill to the kill count && decrease the ammount of enemys left on this floor/level
                 gameManager.kills++;
                 gameManager.currentEnemies[gameManager.currentFloor]--;

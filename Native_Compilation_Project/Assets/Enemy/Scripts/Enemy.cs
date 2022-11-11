@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public GameObject shotParticleEffect;
 
     [Header("########## MOVEMENT ##########")]
+    public bool stop;
     [Header("Nav Mesh Agent")]
     public float speed = 3.5f;
     public float angularSpeed = 120;
@@ -30,6 +31,10 @@ public class Enemy : MonoBehaviour
     public int currentPoint = 0;
     public float distanceToPoint = 0.1f;
     public float wanderingStoppingDistance = 0;
+
+    [Header("########## SOUND ##########")]
+    public AudioSource audioSource;
+    public AudioClip audioClip;
 
     [Header("########## ATTACK ##########")]
     public float attackDistance;
@@ -65,6 +70,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stop = false;
         _player = GameObject.FindGameObjectWithTag("Player");
         _agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         curAmmo = maxAmmo;
@@ -81,84 +87,91 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // CALCULATE ANGLE TO PLAYER
-        Vector3 targetDir = _player.transform.position - transform.position;
-        float angle = Vector3.Angle(targetDir, transform.forward);
-
-        canRotate = false;
-        if (Vector3.Distance(_player.transform.position, transform.position) < stoppingDistance)
-            canRotate = true;
-
-        // IF ANGLE WITHING ALLOWED RANGE
-        if (angle < minSightAngle || canRotate)
+        if (!stop)
         {
-            // CHECK IF THERE IS A LINE OF SIGHT TO THE PLAYER
-            RaycastHit hit;
-            //Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red, 2);
-            if (Physics.Raycast(transform.position, targetDir, out hit, maxSightDistance, layerMask))
+            // CALCULATE ANGLE TO PLAYER
+            Vector3 targetDir = _player.transform.position - transform.position;
+            float angle = Vector3.Angle(targetDir, transform.forward);
+
+            canRotate = false;
+            if (Vector3.Distance(_player.transform.position, transform.position) < stoppingDistance)
+                canRotate = true;
+
+            // IF ANGLE WITHING ALLOWED RANGE
+            if (angle < minSightAngle || canRotate)
             {
-                
-                // IF THERE IS A LINE OF SIGHT TO THE PLAYER
-                if (hit.transform.gameObject.tag == "Player")
+                // CHECK IF THERE IS A LINE OF SIGHT TO THE PLAYER
+                RaycastHit hit;
+                //Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red, 2);
+                if (Physics.Raycast(transform.position, targetDir, out hit, maxSightDistance, layerMask))
                 {
-                    //Debug.Log(hit.transform);
-                    followingPlayer = true;
 
-                    // MOVE TO PLAYER POSITION
-                    seenPlayer = true;
-                    playerLastKnowPosition = _player.transform.position;
-
-                    _agent.stoppingDistance = stoppingDistance;
-                    if (melee)
-                        _agent.stoppingDistance = meleeStoppingDistance;
-
-                    _agent.SetDestination(playerLastKnowPosition);
-
-                    if (canRotate)
+                    // IF THERE IS A LINE OF SIGHT TO THE PLAYER
+                    if (hit.transform.gameObject.tag == "Player")
                     {
-                        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDir, 1, 1);
-                        transform.rotation = Quaternion.LookRotation(newDirection);
-                    }
+                        //Debug.Log(hit.transform);
+                        followingPlayer = true;
 
+                        // MOVE TO PLAYER POSITION
+                        seenPlayer = true;
+                        playerLastKnowPosition = _player.transform.position;
 
-                    // ATTACK
-                    if (Vector3.Distance(transform.position, _player.transform.position) < attackDistance)
-                    {
-                        if (Time.time > shotTime + maxShootRate)
+                        _agent.stoppingDistance = stoppingDistance;
+                        if (melee)
+                            _agent.stoppingDistance = meleeStoppingDistance;
+
+                        _agent.SetDestination(playerLastKnowPosition);
+
+                        if (canRotate)
                         {
-                            shotTime = Time.time;
-                            shoot();
+                            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDir, 1, 1);
+                            transform.rotation = Quaternion.LookRotation(newDirection);
+                        }
+
+
+                        // ATTACK
+                        if (Vector3.Distance(transform.position, _player.transform.position) < attackDistance)
+                        {
+                            if (Time.time > shotTime + maxShootRate)
+                            {
+                                shotTime = Time.time;
+                                shoot();
+                            }
                         }
                     }
+                    else
+                        followingPlayer = false;
                 }
                 else
                     followingPlayer = false;
             }
             else
                 followingPlayer = false;
+
+            // MOVE TO THE PLAYERS LAST KWNO POSITION (WHERE YOU LAST SAW/HEARD THE PLAYER)
+            if (seenPlayer && !followingPlayer)
+            {
+                if (Vector3.Distance(transform.position, playerLastKnowPosition) > 1)
+                    _agent.SetDestination(playerLastKnowPosition);
+                else
+                    seenPlayer = false;
+            }
+            // MOVE TO THE ORIGNAL POSITION AND CONTINUE WANDERING
+            else if (!followingPlayer)
+            {
+                _agent.stoppingDistance = wanderingStoppingDistance;
+                _agent.SetDestination(path[currentPoint]);
+                if (Vector3.Distance(transform.position, path[currentPoint]) < distanceToPoint)
+                {
+                    currentPoint++;
+                    if (currentPoint == path.Length)
+                        currentPoint = 0;
+                }
+            }
         }
         else
-            followingPlayer = false;
-
-        // MOVE TO THE PLAYERS LAST KWNO POSITION (WHERE YOU LAST SAW/HEARD THE PLAYER)
-        if (seenPlayer && !followingPlayer)
         {
-            if (Vector3.Distance(transform.position, playerLastKnowPosition) > 1)
-                _agent.SetDestination(playerLastKnowPosition);
-            else
-                seenPlayer = false;
-        }
-        // MOVE TO THE ORIGNAL POSITION AND CONTINUE WANDERING
-        else if (!followingPlayer)
-        {
-            _agent.stoppingDistance = wanderingStoppingDistance;
-            _agent.SetDestination(path[currentPoint]);
-            if (Vector3.Distance(transform.position, path[currentPoint]) < distanceToPoint)
-            {
-                currentPoint++;
-                if (currentPoint == path.Length)
-                    currentPoint = 0;
-            }
+            _agent.isStopped = true;
         }
     }
 
@@ -179,6 +192,7 @@ public class Enemy : MonoBehaviour
 
                 if (angle < minAngle)
                 {
+                    audioSource.PlayOneShot(audioClip);
                     _player.GetComponent<Health>().changeHealth(-damage);
                 }
             }
@@ -199,6 +213,7 @@ public class Enemy : MonoBehaviour
                         _temp.GetComponent<INFO>().damage = damage;
                         Physics.IgnoreCollision(_temp.GetComponent<Collider>(), _player.GetComponent<PickupColliderID>().col);
                     }
+                    audioSource.PlayOneShot(audioClip);
                     GameObject particle = Instantiate(shotParticleEffect, firePoint.transform.position, firePoint.transform.rotation);
                     Destroy(particle, 2);
                 }
@@ -222,6 +237,8 @@ public class Enemy : MonoBehaviour
 
                     GameObject particle = Instantiate(shotParticleEffect, firePoint.transform.position, firePoint.transform.rotation);
                     Destroy(particle, 2);
+
+                    audioSource.PlayOneShot(audioClip);
                 }
                 else
                 {
