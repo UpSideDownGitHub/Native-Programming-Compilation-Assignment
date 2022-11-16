@@ -126,6 +126,43 @@ public class WeaponPickup : MonoBehaviour
             }
         }
     }
+
+    public void giveWeapon(int wepaonID)
+    {
+        fists.SetActive(false);
+        // throw old weapon
+        if (currentWeapon != null)
+        {
+            GameObject _temp2 = Instantiate(weapons[currentWeapon.GetComponent<ID>().weaponID], spawnPosition.position, spawnPosition.rotation);
+            _temp2.GetComponent<ID>().curAmmo = currentWeapon.GetComponent<Shooting>().curAmmo;
+            _temp2.GetComponent<ID>().pickup = true;
+            _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
+            _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
+            Destroy(currentWeapon);
+            audioSource.PlayOneShot(audioClip);
+
+        }
+        // spawning new weapon
+        GameObject _temp = Instantiate(weapons[wepaonID], spawnPosition);
+        _temp.GetComponent<ID>().pickup = false;
+        Destroy(_temp.GetComponent<Rigidbody>());
+        currentWeapon = _temp;
+        currentWeapon.GetComponent<Shooting>().curAmmo = _temp.GetComponent<ID>().maxAmmo;
+
+        // update UI to show new ammo count
+        // if melee weapon
+        if (_temp.GetComponent<ID>().weaponID == 3)
+            ammoText.text = "Fist";
+        else if (_temp.GetComponent<ID>().weaponID == 4)
+            ammoText.text = "Knife";
+        else if (_temp.GetComponent<ID>().weaponID == 5)
+            ammoText.text = "Bat";
+        // ranged weapon
+        else
+        {
+            ammoText.text = currentWeapon.GetComponent<Shooting>().curAmmo.ToString() + "/" + _temp.GetComponent<ID>().maxAmmo.ToString();
+        }
+    }
 }
 
 

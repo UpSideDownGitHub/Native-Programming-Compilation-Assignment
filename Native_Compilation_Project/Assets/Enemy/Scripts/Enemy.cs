@@ -46,6 +46,12 @@ public class Enemy : MonoBehaviour
     public float minSightAngle = 45;
     public float maxSightDistance = 10;
     private int layerMask;
+    [Header("--------------------")]
+    [Header("Attack Timer")]
+    public bool firstAttack;
+    public float attackWait;
+    private float _attackTime;
+
 
 
     [Header("--------------------")]
@@ -132,12 +138,23 @@ public class Enemy : MonoBehaviour
                         // ATTACK
                         if (Vector3.Distance(transform.position, _player.transform.position) < attackDistance)
                         {
-                            if (Time.time > shotTime + maxShootRate)
+                            if (firstAttack)
                             {
-                                shotTime = Time.time;
-                                shoot();
+                                _attackTime = Time.time;
+                                firstAttack = false;
+                            }
+                            if (Time.time > _attackTime + attackWait)
+                            {
+                                // need an inital timer for attack
+                                if (Time.time > shotTime + maxShootRate)
+                                {
+                                    shotTime = Time.time;
+                                    shoot();
+                                }
                             }
                         }
+                        else
+                            firstAttack = true;
                     }
                     else
                         followingPlayer = false;
@@ -181,6 +198,7 @@ public class Enemy : MonoBehaviour
         playerLastKnowPosition = pos;
     }
 
+
     public void shoot()
     {
         if (melee)
@@ -191,7 +209,7 @@ public class Enemy : MonoBehaviour
                 float angle = Vector3.Angle(targetDir, transform.forward);
 
                 if (angle < minAngle)
-                {
+                {   
                     audioSource.PlayOneShot(audioClip);
                     _player.GetComponent<Health>().changeHealth(-damage);
                 }

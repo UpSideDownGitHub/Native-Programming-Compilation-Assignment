@@ -196,9 +196,11 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 3dc7b4438e9f788479f2eba0e75191b1, type: 3}
   attackDistance: 12
   maxShootRate: 0.75
-  damage: 10
+  damage: 1
   minSightAngle: 40
   maxSightDistance: 15
+  firstAttack: 1
+  attackWait: 0.5
   melee: 0
   meleeAttackDistance: 0
   minAngle: 25
