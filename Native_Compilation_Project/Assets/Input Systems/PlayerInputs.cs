@@ -89,6 +89,24 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PvP_WeaponSwapLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecc5990e-695c-4d14-a0d6-a4af9964aa9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PvP_WeaponSwapRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9387764-88a7-4c38-8d47-83bbe0384ab9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -289,6 +307,28 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60ebb146-67c0-408f-bb2f-ce4b55ba42a4"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PvP_WeaponSwapLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b24f6d7-26c8-4b3f-91ed-d88ada35f2f9"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PvP_WeaponSwapRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -465,7 +505,19 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""PvP"",
+            ""bindingGroup"": ""PvP"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // Player_Map
         m_Player_Map = asset.FindActionMap("Player_Map", throwIfNotFound: true);
@@ -476,6 +528,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_Map_Shoot = m_Player_Map.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Map_Dodge = m_Player_Map.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Map_Pause = m_Player_Map.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Map_PvP_WeaponSwapLeft = m_Player_Map.FindAction("PvP_WeaponSwapLeft", throwIfNotFound: true);
+        m_Player_Map_PvP_WeaponSwapRight = m_Player_Map.FindAction("PvP_WeaponSwapRight", throwIfNotFound: true);
         // Menus_Map
         m_Menus_Map = asset.FindActionMap("Menus_Map", throwIfNotFound: true);
         m_Menus_Map_Up = m_Menus_Map.FindAction("Up", throwIfNotFound: true);
@@ -550,6 +604,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map_Shoot;
     private readonly InputAction m_Player_Map_Dodge;
     private readonly InputAction m_Player_Map_Pause;
+    private readonly InputAction m_Player_Map_PvP_WeaponSwapLeft;
+    private readonly InputAction m_Player_Map_PvP_WeaponSwapRight;
     public struct Player_MapActions
     {
         private @PlayerInputs m_Wrapper;
@@ -561,6 +617,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Map_Shoot;
         public InputAction @Dodge => m_Wrapper.m_Player_Map_Dodge;
         public InputAction @Pause => m_Wrapper.m_Player_Map_Pause;
+        public InputAction @PvP_WeaponSwapLeft => m_Wrapper.m_Player_Map_PvP_WeaponSwapLeft;
+        public InputAction @PvP_WeaponSwapRight => m_Wrapper.m_Player_Map_PvP_WeaponSwapRight;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -591,6 +649,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPause;
+                @PvP_WeaponSwapLeft.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapLeft;
+                @PvP_WeaponSwapLeft.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapLeft;
+                @PvP_WeaponSwapLeft.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapLeft;
+                @PvP_WeaponSwapRight.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapRight;
+                @PvP_WeaponSwapRight.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapRight;
+                @PvP_WeaponSwapRight.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapRight;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -616,6 +680,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @PvP_WeaponSwapLeft.started += instance.OnPvP_WeaponSwapLeft;
+                @PvP_WeaponSwapLeft.performed += instance.OnPvP_WeaponSwapLeft;
+                @PvP_WeaponSwapLeft.canceled += instance.OnPvP_WeaponSwapLeft;
+                @PvP_WeaponSwapRight.started += instance.OnPvP_WeaponSwapRight;
+                @PvP_WeaponSwapRight.performed += instance.OnPvP_WeaponSwapRight;
+                @PvP_WeaponSwapRight.canceled += instance.OnPvP_WeaponSwapRight;
             }
         }
     }
@@ -693,6 +763,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         }
     }
     public Menus_MapActions @Menus_Map => new Menus_MapActions(this);
+    private int m_PvPSchemeIndex = -1;
+    public InputControlScheme PvPScheme
+    {
+        get
+        {
+            if (m_PvPSchemeIndex == -1) m_PvPSchemeIndex = asset.FindControlSchemeIndex("PvP");
+            return asset.controlSchemes[m_PvPSchemeIndex];
+        }
+    }
     public interface IPlayer_MapActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -702,6 +781,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnPvP_WeaponSwapLeft(InputAction.CallbackContext context);
+        void OnPvP_WeaponSwapRight(InputAction.CallbackContext context);
     }
     public interface IMenus_MapActions
     {

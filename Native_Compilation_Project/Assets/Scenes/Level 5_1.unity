@@ -12340,9 +12340,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSceneIndex: 0
   currentFloor: 0
-  maxFloor: 1
+  maxFloor: 3
   stairsEnabled: 0
-  currentEnemies: 0100000001000000
+  currentEnemies: 01000000010000000100000001000000
   endScreen: {fileID: 431647116}
   pauseMenu: {fileID: 897056670}
   inGameUI: {fileID: 117843974}
