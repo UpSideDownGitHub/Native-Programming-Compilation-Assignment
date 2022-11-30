@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 //using UnityEngine.InputSystem.iOS;
 //using System.Diagnostics.CodeAnalysis;
 
@@ -25,6 +26,8 @@ public class PvP_Shooting : MonoBehaviour
 
     [Header("Bullet")]
     public float damage;
+    [Range(0,1)]
+    public int bulletID;
 
     [Header("Shooting")]
     public GameObject firePoint;
@@ -56,14 +59,23 @@ public class PvP_Shooting : MonoBehaviour
 
     public void Start()
     {
-        //ammoText = GameObject.FindGameObjectWithTag("Ammo_Count").GetComponent<TMP_Text>();
-        shotTime = 0;
         curAmmo = maxAmmo;
         curHeldAmmo = maxHeldAmmo;
     }
 
+    public void OnEnable()
+    {
+        //ammoText = GameObject.FindGameObjectWithTag("Ammo_Count").GetComponent<TMP_Text>();
+        shotTime = 0;
+        timeOfLastShot = 0;
+        reloading = false;
+
+    }
+
     public void ShootHeld()
     {
+        if (shotGun || manual)
+            return;
         if (reloading)
         {
             if (Time.time > reloadTime + timeOfLastShot)
@@ -85,11 +97,11 @@ public class PvP_Shooting : MonoBehaviour
                 }
             }
         }
-        if (!shotGun && !manual)
+        else if (!shotGun && !manual)
         {
             if (Time.time > shotTime + maxShootRate)
             {
-                if (curAmmo != 0)
+                if (curAmmo > 0)
                 {
                     curAmmo--;
 
@@ -103,6 +115,7 @@ public class PvP_Shooting : MonoBehaviour
                     GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                     _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                     _temp.GetComponent<INFO>().damage = damage;
+                    _temp.GetComponent<INFO>().meleeID = bulletID;
                     //ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
 
                     GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
@@ -116,6 +129,11 @@ public class PvP_Shooting : MonoBehaviour
 
                     //gameManager.shots++;
                 }
+                else
+                {
+                    reloading = true;
+                    timeOfLastShot = Time.time;
+                }
             }
         }
     }
@@ -123,6 +141,8 @@ public class PvP_Shooting : MonoBehaviour
     // Update is called once per frame
     public void ShootPressed()
     {
+        if (!shotGun && !manual)
+            return;
         if (reloading)
         {
             if (Time.time > reloadTime + timeOfLastShot)
@@ -148,7 +168,7 @@ public class PvP_Shooting : MonoBehaviour
         {
             if (Time.time > shotTime + maxShootRate)
             {
-                if (curAmmo != 0)
+                if (curAmmo > 0)
                 {
                     curAmmo--;
 
@@ -162,6 +182,7 @@ public class PvP_Shooting : MonoBehaviour
                     GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                     _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                     _temp.GetComponent<INFO>().damage = damage;
+                    _temp.GetComponent<INFO>().meleeID = bulletID;
                     //ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
 
                     GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
@@ -174,6 +195,11 @@ public class PvP_Shooting : MonoBehaviour
                     audioSource.PlayOneShot(clip);
 
                     //gameManager.shots++;
+                }
+                else
+                {
+                    reloading = true;
+                    timeOfLastShot = Time.time;
                 }
             }
         }
@@ -181,7 +207,7 @@ public class PvP_Shooting : MonoBehaviour
         {
             if (Time.time > shotTime + maxShootRate)
             {
-                if (curAmmo != 0)
+                if (curAmmo > 0)
                 {
                     curAmmo--;
 
@@ -195,6 +221,7 @@ public class PvP_Shooting : MonoBehaviour
                     GameObject _temp = Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
                     _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                     _temp.GetComponent<INFO>().damage = damage;
+                    _temp.GetComponent<INFO>().meleeID = bulletID;
                     //ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
 
                     GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
@@ -208,13 +235,18 @@ public class PvP_Shooting : MonoBehaviour
 
                     //gameManager.shots++;
                 }
+                else
+                {
+                    reloading = true;
+                    timeOfLastShot = Time.time;
+                }
             }
         }
         else
         {
             if (Time.time > shotTime + maxShootRate)
             {
-                if (curAmmo != 0)
+                if (curAmmo > 0)
                 {
                     curAmmo--;
 
@@ -231,6 +263,7 @@ public class PvP_Shooting : MonoBehaviour
                         GameObject _temp = Instantiate(bullet, firePoint.transform.position, _rot);
                         _temp.GetComponent<Rigidbody>().AddForce(_temp.transform.forward * bulletSpeed);
                         _temp.GetComponent<INFO>().damage = damage;
+                        _temp.GetComponent<INFO>().meleeID = bulletID;
                     }
 
                     GameObject particle = Instantiate(shotParticle, firePoint.transform.position, firePoint.transform.rotation);
@@ -246,6 +279,11 @@ public class PvP_Shooting : MonoBehaviour
                     StartCoroutine(controllerShake());
 
                     //ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
+                }
+                else
+                {
+                    reloading = true;
+                    timeOfLastShot = Time.time;
                 }
             }
         }

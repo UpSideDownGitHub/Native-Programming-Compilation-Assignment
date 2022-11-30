@@ -266,8 +266,9 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: b39ec697f76aec04fb8081c0c4f6dbae, type: 3}
   ammoText: {fileID: 0}
   damage: 5
+  bulletID: 0
   firePoint: {fileID: 2073090860442250870}
-  bullet: {fileID: 4778730020531401928, guid: fe970cd94c4da694f91a7f969510c3a6, type: 3}
+  bullet: {fileID: 7652618037008810816, guid: 436c1b9b608f38b43a2557aa0b11179f, type: 3}
   bulletSpeed: 500
   maxAmmo: 30
   curAmmo: 30

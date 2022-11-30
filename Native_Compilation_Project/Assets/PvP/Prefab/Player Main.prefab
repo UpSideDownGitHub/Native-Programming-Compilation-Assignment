@@ -43,7 +43,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1957821137954597677}
   - component: {fileID: 1957821137954597674}
-  - component: {fileID: 1957821137954597675}
   - component: {fileID: 1957821137954597676}
   - component: {fileID: 1957821137954597679}
   - component: {fileID: 1957821137954597678}
@@ -113,14 +112,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1957821137954597675
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957821137954597672}
-  m_Enabled: 1
 --- !u!114 &1957821137954597676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +210,7 @@ GameObject:
   - component: {fileID: 3756487323612738286}
   - component: {fileID: 1932445829075690022}
   - component: {fileID: 8967843991548711179}
+  - component: {fileID: 6419488113367083187}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -393,8 +385,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8967843991548711179}
         m_TargetAssemblyTypeName: PvP_WeaponManager, Assembly-CSharp
-        m_MethodName: Shoot
-        m_Mode: 1
+        m_MethodName: ShootHeld
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -406,19 +398,7 @@ MonoBehaviour:
     m_ActionId: 9c22cf6c-49a2-4811-9d4c-a7ffd330b11a
     m_ActionName: Player_Map/Shoot[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger,/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3756487323612738286}
-        m_TargetAssemblyTypeName: PvP_Movement, Assembly-CSharp
-        m_MethodName: Dodge
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: ed9b8d3c-985c-479e-8cd2-98ffc7e28786
     m_ActionName: Player_Map/Dodge[/XInputControllerWindows/leftShoulder,/XInputControllerWindows1/leftShoulder]
   - m_PersistentCalls:
@@ -453,8 +433,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8967843991548711179}
         m_TargetAssemblyTypeName: PvP_WeaponManager, Assembly-CSharp
-        m_MethodName: leftTrigger
-        m_Mode: 1
+        m_MethodName: LeftTrigger
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -469,8 +449,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8967843991548711179}
         m_TargetAssemblyTypeName: PvP_WeaponManager, Assembly-CSharp
-        m_MethodName: rightTrigger
-        m_Mode: 1
+        m_MethodName: RightTrigger
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -481,6 +461,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b9387764-88a7-4c38-8d47-83bbe0384ab9
     m_ActionName: Player_Map/PvP_WeaponSwapRight[/XInputControllerWindows/rightShoulder,/XInputControllerWindows1/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8967843991548711179}
+        m_TargetAssemblyTypeName: PvP_WeaponManager, Assembly-CSharp
+        m_MethodName: ShootPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a72dd228-e1ea-4627-a81b-09c563e8c525
+    m_ActionName: Player_Map/PvP_Shoot2[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3756487323612738286}
+        m_TargetAssemblyTypeName: PvP_Movement, Assembly-CSharp
+        m_MethodName: Dodge
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6d51d189-9077-4ce0-9279-11cc49582eb8
+    m_ActionName: Player_Map/PvP_Dodge[/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PvP
   m_DefaultActionMap: Player_Map
@@ -613,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eeb6c2877bc3746a7261a61647a2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 100
   currentHealth: 0
 --- !u!114 &8967843991548711179
 MonoBehaviour:
@@ -633,6 +645,19 @@ MonoBehaviour:
   - {fileID: 6484319980946712239}
   - {fileID: 2949030253956671647}
   - {fileID: 8980065298096166442}
+--- !u!114 &6419488113367083187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182102944818014917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699dc1b4e6daa2e479f26761daba8f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
 --- !u!1 &8182102945063474393
 GameObject:
   m_ObjectHideFlags: 0

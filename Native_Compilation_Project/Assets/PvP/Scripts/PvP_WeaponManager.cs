@@ -17,32 +17,41 @@ public class PvP_WeaponManager : MonoBehaviour
     private bool _shootHeld;
 
 
+    // UI
+    public int playerID;
+
+
     public void LeftTrigger(InputAction.CallbackContext ctx) => _leftTrigger = ctx.action.WasPressedThisFrame();
     public void RightTrigger(InputAction.CallbackContext ctx) => _rightTrigger = ctx.action.WasPressedThisFrame();
     public void ShootPressed(InputAction.CallbackContext ctx) => _shootPressed = ctx.action.WasPressedThisFrame();
-    public void ShootHeld(InputAction.CallbackContext ctx) => _shootHeld = ctx.action.IsPresed();
+    public void ShootHeld(InputAction.CallbackContext ctx) => _shootHeld = ctx.action.IsPressed();
 
     public void Update()
     {
         if (_leftTrigger)
         {
+            print("Left Pressed");
             _leftTrigger = false;
             leftTrigger();
         }
         else if (_rightTrigger)
         {
+            print("Right Pressed");
             _rightTrigger = false;
             rightTrigger();
         }
         
         if (_shootPressed)
         {
+            print("Shoot Pressed");
             _shootPressed = false;
+            ShootPressed();
 
         }
         else if (_shootHeld)
         {
-            _shootHeld = false;
+            print("Shoot Held");
+            ShootHeld();
         }
     }
 
@@ -68,10 +77,10 @@ public class PvP_WeaponManager : MonoBehaviour
 
     public void ShootHeld()
     {
-        weapons[currentWeapon].GetComponent<PvP_Shooting>().Shoot();
+        weapons[currentWeapon].GetComponent<PvP_Shooting>().ShootHeld();
     }
     public void ShootPressed()
     {
-        weapons[currentWeapon].GetComponent<PvP_Shooting>().Shoot();
+        weapons[currentWeapon].GetComponent<PvP_Shooting>().ShootPressed();
     }
 }

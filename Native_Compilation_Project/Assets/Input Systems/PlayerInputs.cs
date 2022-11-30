@@ -107,6 +107,24 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PvP_Shoot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""a72dd228-e1ea-4627-a81b-09c563e8c525"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PvP_Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""6d51d189-9077-4ce0-9279-11cc49582eb8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -329,6 +347,28 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""action"": ""PvP_WeaponSwapRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1c51355-da60-4103-9708-c42c4b2a9a0b"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PvP_Shoot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7494bb9-a04d-4673-89a4-d6132e7e99f3"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PvP_Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -530,6 +570,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_Map_Pause = m_Player_Map.FindAction("Pause", throwIfNotFound: true);
         m_Player_Map_PvP_WeaponSwapLeft = m_Player_Map.FindAction("PvP_WeaponSwapLeft", throwIfNotFound: true);
         m_Player_Map_PvP_WeaponSwapRight = m_Player_Map.FindAction("PvP_WeaponSwapRight", throwIfNotFound: true);
+        m_Player_Map_PvP_Shoot2 = m_Player_Map.FindAction("PvP_Shoot2", throwIfNotFound: true);
+        m_Player_Map_PvP_Dodge = m_Player_Map.FindAction("PvP_Dodge", throwIfNotFound: true);
         // Menus_Map
         m_Menus_Map = asset.FindActionMap("Menus_Map", throwIfNotFound: true);
         m_Menus_Map_Up = m_Menus_Map.FindAction("Up", throwIfNotFound: true);
@@ -606,6 +648,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map_Pause;
     private readonly InputAction m_Player_Map_PvP_WeaponSwapLeft;
     private readonly InputAction m_Player_Map_PvP_WeaponSwapRight;
+    private readonly InputAction m_Player_Map_PvP_Shoot2;
+    private readonly InputAction m_Player_Map_PvP_Dodge;
     public struct Player_MapActions
     {
         private @PlayerInputs m_Wrapper;
@@ -619,6 +663,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_Player_Map_Pause;
         public InputAction @PvP_WeaponSwapLeft => m_Wrapper.m_Player_Map_PvP_WeaponSwapLeft;
         public InputAction @PvP_WeaponSwapRight => m_Wrapper.m_Player_Map_PvP_WeaponSwapRight;
+        public InputAction @PvP_Shoot2 => m_Wrapper.m_Player_Map_PvP_Shoot2;
+        public InputAction @PvP_Dodge => m_Wrapper.m_Player_Map_PvP_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -655,6 +701,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @PvP_WeaponSwapRight.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapRight;
                 @PvP_WeaponSwapRight.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapRight;
                 @PvP_WeaponSwapRight.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_WeaponSwapRight;
+                @PvP_Shoot2.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Shoot2;
+                @PvP_Shoot2.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Shoot2;
+                @PvP_Shoot2.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Shoot2;
+                @PvP_Dodge.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Dodge;
+                @PvP_Dodge.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Dodge;
+                @PvP_Dodge.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Dodge;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -686,6 +738,12 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @PvP_WeaponSwapRight.started += instance.OnPvP_WeaponSwapRight;
                 @PvP_WeaponSwapRight.performed += instance.OnPvP_WeaponSwapRight;
                 @PvP_WeaponSwapRight.canceled += instance.OnPvP_WeaponSwapRight;
+                @PvP_Shoot2.started += instance.OnPvP_Shoot2;
+                @PvP_Shoot2.performed += instance.OnPvP_Shoot2;
+                @PvP_Shoot2.canceled += instance.OnPvP_Shoot2;
+                @PvP_Dodge.started += instance.OnPvP_Dodge;
+                @PvP_Dodge.performed += instance.OnPvP_Dodge;
+                @PvP_Dodge.canceled += instance.OnPvP_Dodge;
             }
         }
     }
@@ -783,6 +841,8 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnPvP_WeaponSwapLeft(InputAction.CallbackContext context);
         void OnPvP_WeaponSwapRight(InputAction.CallbackContext context);
+        void OnPvP_Shoot2(InputAction.CallbackContext context);
+        void OnPvP_Dodge(InputAction.CallbackContext context);
     }
     public interface IMenus_MapActions
     {

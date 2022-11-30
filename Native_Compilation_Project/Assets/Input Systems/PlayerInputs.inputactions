@@ -85,6 +85,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PvP_Shoot2",
+                    "type": "Button",
+                    "id": "a72dd228-e1ea-4627-a81b-09c563e8c525",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PvP_Dodge",
+                    "type": "Button",
+                    "id": "6d51d189-9077-4ce0-9279-11cc49582eb8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -305,6 +323,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PvP_WeaponSwapRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1c51355-da60-4103-9708-c42c4b2a9a0b",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PvP_Shoot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7494bb9-a04d-4673-89a4-d6132e7e99f3",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PvP_Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

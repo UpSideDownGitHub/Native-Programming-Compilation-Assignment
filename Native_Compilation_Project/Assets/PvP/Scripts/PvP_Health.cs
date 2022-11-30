@@ -9,7 +9,10 @@ public class PvP_Health : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
+    public GameObject SpawnPoint;
     private GameManager gameManager;
+
+    public int playerID;
 
     public void Start()
     {
@@ -20,6 +23,8 @@ public class PvP_Health : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("P_DAMAGE"))
         {
+            if (collision.gameObject.GetComponent<INFO>().meleeID == playerID)
+                return;
             changeHealth(-collision.gameObject.GetComponent<INFO>().damage);
             Destroy(collision.gameObject);
         }
@@ -31,7 +36,8 @@ public class PvP_Health : MonoBehaviour
             currentHealth += ammount;
         else
         {
-            // end the current round
+            // respawn the player at the spawn position
+            transform.position = SpawnPoint.transform.position;
         }
     }
 }
