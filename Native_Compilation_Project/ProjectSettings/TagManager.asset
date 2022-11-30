@@ -13,6 +13,7 @@ TagManager:
   - ScoreManager
   - MANAGER
   - Ammo_Count
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

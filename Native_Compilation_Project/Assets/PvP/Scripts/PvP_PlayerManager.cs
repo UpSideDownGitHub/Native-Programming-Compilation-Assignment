@@ -23,7 +23,7 @@ public class PvP_PlayerManager : MonoBehaviour
         {
             var objects = Resources.FindObjectsOfTypeAll(typeof(PvP_Movement));
             objects[0].GetComponent<PvP_PlayerID>().playerID = 2;
-            P1 = objects[0].GameObject();
+            P2 = objects[0].GameObject();
         }
 
     }

@@ -13,7 +13,6 @@ public class PvP_PlayerID : MonoBehaviour
      * set the ID on the bullet to be the current player ID
     */
     public PvP_PlayerManager manager;
-    public PvP_Shooting shooting;
     public PvP_WeaponManager weaponManager;
     public PvP_Health health;
 
@@ -22,16 +21,18 @@ public class PvP_PlayerID : MonoBehaviour
         manager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<PvP_PlayerManager>();
         if (playerID == 1) // Player 1 (blue)
         {
-            shooting = manager.P1.GetComponent<PvP_Shooting>();
             weaponManager = manager.P1.GetComponent<PvP_WeaponManager>();
             health = manager.P1.GetComponent<PvP_Health>();
             // bullet colour
             foreach(var item in weaponManager.weapons)
             {
-                item.GetComponent<Shooting>().bullet.GetComponent<MeshRenderer>().material.color = Color.blue;
+                item.GetComponent<PvP_Shooting>().bullet.GetComponent<MeshRenderer>().sharedMaterial.color = Color.blue;
             }
             // bullet ID
-            shooting.bulletID = 0;
+            foreach (var item in weaponManager.weapons)
+            {
+                item.GetComponent<PvP_Shooting>().bulletID = 0;
+            }
             // weapon manager ID
             weaponManager.playerID = 0;
             // Health ID
@@ -41,22 +42,24 @@ public class PvP_PlayerID : MonoBehaviour
         }
         else if (playerID == 2) // Player 2 (red)
         {
-            shooting = manager.P1.GetComponent<PvP_Shooting>();
-            weaponManager = manager.P1.GetComponent<PvP_WeaponManager>();
-            health = manager.P1.GetComponent<PvP_Health>();
+            weaponManager = manager.P2.GetComponent<PvP_WeaponManager>();
+            health = manager.P2.GetComponent<PvP_Health>();
             // bullet colour
             foreach (var item in weaponManager.weapons)
             {
-                item.GetComponent<Shooting>().bullet.GetComponent<MeshRenderer>().material.color = Color.red;
+                item.GetComponent<PvP_Shooting>().bullet.GetComponent<MeshRenderer>().sharedMaterial.color = Color.red;
             }
             // bullet ID
-            shooting.bulletID = 1;
+            foreach (var item in weaponManager.weapons)
+            {
+                item.GetComponent<PvP_Shooting>().bulletID = 1;
+            }
             // weapon manager ID
             weaponManager.playerID = 1;
             // Health ID
             health.playerID = 1;
             // object color
-            manager.P1.GetComponent<MeshRenderer>().material.color = Color.red;
+            manager.P2.GetComponent<MeshRenderer>().material.color = Color.red;
         }
     }
 }
