@@ -618,7 +618,23 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""K&M"",
+            ""bindingGroup"": ""K&M"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
                     ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
@@ -894,6 +910,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         {
             if (m_PvPSchemeIndex == -1) m_PvPSchemeIndex = asset.FindControlSchemeIndex("PvP");
             return asset.controlSchemes[m_PvPSchemeIndex];
+        }
+    }
+    private int m_KMSchemeIndex = -1;
+    public InputControlScheme KMScheme
+    {
+        get
+        {
+            if (m_KMSchemeIndex == -1) m_KMSchemeIndex = asset.FindControlSchemeIndex("K&M");
+            return asset.controlSchemes[m_KMSchemeIndex];
         }
     }
     public interface IPlayer_MapActions

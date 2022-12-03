@@ -307,8 +307,8 @@ public class PvP_Shooting : MonoBehaviour
     //  REDOO THIS SO THAT IT WILL WORK WITH 2 CONTROLLERS
     public IEnumerator controllerShake()
     {
-        Gamepad.current.SetMotorSpeeds(strength, strength);
+        Gamepad.all[bulletID].SetMotorSpeeds(strength, strength);
         yield return new WaitForSeconds(shakeAmmount);
-        Gamepad.current.ResetHaptics();
+        Gamepad.all[bulletID].ResetHaptics();
     }
 }

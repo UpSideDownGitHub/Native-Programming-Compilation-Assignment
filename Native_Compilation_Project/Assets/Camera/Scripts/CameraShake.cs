@@ -13,7 +13,7 @@ public class CameraShake : MonoBehaviour
 
     public void Start()
     {
-        cam = Camera.main;
+        cam = GetComponent<Camera>();
     }
 
     public void cameraShake(float length, float hardness)

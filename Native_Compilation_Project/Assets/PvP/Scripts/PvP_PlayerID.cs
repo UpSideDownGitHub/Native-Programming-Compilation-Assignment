@@ -15,10 +15,12 @@ public class PvP_PlayerID : MonoBehaviour
     public PvP_PlayerManager manager;
     public PvP_WeaponManager weaponManager;
     public PvP_Health health;
+    public PvP_StartManager startManager;
 
     public void Start()
     {
         manager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<PvP_PlayerManager>();
+        startManager = GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_StartManager>();
         if (playerID == 1) // Player 1 (blue)
         {
             weaponManager = manager.P1.GetComponent<PvP_WeaponManager>();
@@ -39,6 +41,8 @@ public class PvP_PlayerID : MonoBehaviour
             health.playerID = 0;
             // object color
             manager.P1.GetComponent<MeshRenderer>().material.color = Color.blue;
+            // start manager P1
+            startManager.p1JoinedGame();
         }
         else if (playerID == 2) // Player 2 (red)
         {
@@ -60,6 +64,8 @@ public class PvP_PlayerID : MonoBehaviour
             health.playerID = 1;
             // object color
             manager.P2.GetComponent<MeshRenderer>().material.color = Color.red;
+            // start manager P1
+            startManager.p2JoinedGame();
         }
     }
 }
