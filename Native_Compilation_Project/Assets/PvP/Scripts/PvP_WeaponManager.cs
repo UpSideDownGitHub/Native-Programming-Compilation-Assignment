@@ -19,12 +19,28 @@ public class PvP_WeaponManager : MonoBehaviour
 
     // UI
     public int playerID;
+    public PvP_UIManager uiManager;
 
 
     public void LeftTrigger(InputAction.CallbackContext ctx) => _leftTrigger = ctx.action.WasPressedThisFrame();
     public void RightTrigger(InputAction.CallbackContext ctx) => _rightTrigger = ctx.action.WasPressedThisFrame();
     public void ShootPressed(InputAction.CallbackContext ctx) => _shootPressed = ctx.action.WasPressedThisFrame();
     public void ShootHeld(InputAction.CallbackContext ctx) => _shootHeld = ctx.action.IsPressed();
+
+    public void Start()
+    {
+        uiManager = GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_UIManager>();
+        if (playerID == 0)
+        {
+            uiManager.updateP1WeaponsUI();
+            uiManager.updateP1AmmoUI();
+        }
+        else
+        {
+            uiManager.updateP2WeaponsUI();
+            uiManager.updateP2AmmoUI();
+        }
+    }
 
     public void Update()
     {
@@ -62,6 +78,10 @@ public class PvP_WeaponManager : MonoBehaviour
             weapons[currentWeapon].SetActive(false);
             currentWeapon--;
             weapons[currentWeapon].SetActive(true);
+            if (playerID == 0)
+                uiManager.updateP1WeaponsUI();
+            else
+                uiManager.updateP2WeaponsUI();
         }
     }
 
@@ -72,6 +92,10 @@ public class PvP_WeaponManager : MonoBehaviour
             weapons[currentWeapon].SetActive(false);
             currentWeapon++;
             weapons[currentWeapon].SetActive(true);
+            if (playerID == 0)
+                uiManager.updateP1WeaponsUI();
+            else
+                uiManager.updateP2WeaponsUI();
         }
     }
 

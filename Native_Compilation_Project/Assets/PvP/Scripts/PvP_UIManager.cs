@@ -11,10 +11,12 @@ public class PvP_UIManager : MonoBehaviour
     public TMP_Text P1Kills;
     public TMP_Text P1Weapon;
     public TMP_Text P1Ammo;
+    public TMP_Text P1TotalAmmo;
 
     public TMP_Text P2Kills;
     public TMP_Text P2Weapon;
-    public TMP_Text P2cAmmo;
+    public TMP_Text P2Ammo;
+    public TMP_Text P2TotalAmmo;
 
     void Start()
     {
@@ -33,11 +35,18 @@ public class PvP_UIManager : MonoBehaviour
         if (weaponManager.currentWeapon == 0)
             P1Weapon.text = "Pistol";
         else if (weaponManager.currentWeapon == 1)
-            P1Weapon.text = "Shotgun";
-        else if (weaponManager.currentWeapon == 2)
             P1Weapon.text = "Assult Rifle";
-        P1Ammo.text = weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curAmmo.ToString() + "/" + weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curHeldAmmo.ToString();
+        else if (weaponManager.currentWeapon == 2)
+            P1Weapon.text = "Shotgun";
+        updateP1AmmoUI();
     }
+    public void updateP1AmmoUI()
+    {
+        PvP_WeaponManager weaponManager = manager.P1.GetComponent<PvP_WeaponManager>();
+        P1Ammo.text = weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curAmmo.ToString() + "/" + weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().maxAmmo.ToString();
+        P1TotalAmmo.text = weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curHeldAmmo.ToString();
+    }
+
 
     public void updateP2WeaponsUI()
     {
@@ -45,9 +54,15 @@ public class PvP_UIManager : MonoBehaviour
         if (weaponManager.currentWeapon == 0)
             P1Weapon.text = "Pistol";
         else if (weaponManager.currentWeapon == 1)
-            P1Weapon.text = "Shotgun";
-        else if (weaponManager.currentWeapon == 2)
             P1Weapon.text = "Assult Rifle";
-        P1Ammo.text = weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curAmmo.ToString() + "/" + weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curHeldAmmo.ToString();
+        else if (weaponManager.currentWeapon == 2)
+            P1Weapon.text = "Shotgun";
+        updateP2AmmoUI();
+    }
+    public void updateP2AmmoUI()
+    {
+        PvP_WeaponManager weaponManager = manager.P2.GetComponent<PvP_WeaponManager>();
+        P2Ammo.text = weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curAmmo.ToString() + "/" + weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().maxAmmo.ToString();
+        P2TotalAmmo.text = weaponManager.weapons[weaponManager.currentWeapon].GetComponent<PvP_Shooting>().curHeldAmmo.ToString();
     }
 }

@@ -627,6 +627,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  spawnPoint: {fileID: 0}
+  playerID: 0
+  deaths: 0
 --- !u!114 &8967843991548711179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,6 +648,7 @@ MonoBehaviour:
   - {fileID: 6484319980946712239}
   - {fileID: 2949030253956671647}
   - {fileID: 8980065298096166442}
+  playerID: 0
 --- !u!114 &6419488113367083187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,6 +662,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 0
+  manager: {fileID: 0}
+  weaponManager: {fileID: 0}
+  health: {fileID: 0}
 --- !u!1 &8182102945063474393
 GameObject:
   m_ObjectHideFlags: 0

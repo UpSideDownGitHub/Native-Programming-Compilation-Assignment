@@ -57,6 +57,10 @@ public class PvP_Shooting : MonoBehaviour
 
     private GameManager gameManager;
 
+    [Header("UI")]
+    public PvP_UIManager uiManager;
+
+
     public void Start()
     {
         curAmmo = maxAmmo;
@@ -69,7 +73,33 @@ public class PvP_Shooting : MonoBehaviour
         shotTime = 0;
         timeOfLastShot = 0;
         reloading = false;
+        uiManager = GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_UIManager>();
+    }
 
+    public void Update()
+    {
+        if (reloading && Time.time > reloadTime + timeOfLastShot)
+        {
+            // reload complete
+            reloading = false;
+            if (curHeldAmmo >= 0)
+            {
+                if (curHeldAmmo >= maxAmmo)
+                {
+                    curAmmo = maxAmmo;
+                    curHeldAmmo -= maxAmmo;
+                }
+                else
+                {
+                    curAmmo = curHeldAmmo;
+                    curHeldAmmo = 0;
+                }
+            }
+            if (bulletID == 0)
+                uiManager.updateP1AmmoUI();
+            else
+                uiManager.updateP2AmmoUI();
+        }
     }
 
     public void ShootHeld()
@@ -78,24 +108,7 @@ public class PvP_Shooting : MonoBehaviour
             return;
         if (reloading)
         {
-            if (Time.time > reloadTime + timeOfLastShot)
-            {
-                // reload complete
-                reloading = false;
-                if (curHeldAmmo >= 0)
-                {
-                    if (curHeldAmmo >= maxAmmo)
-                    {
-                        curAmmo = maxAmmo;
-                        curHeldAmmo -= maxAmmo;
-                    }
-                    else
-                    {
-                        curAmmo = curHeldAmmo;
-                        curHeldAmmo = 0;
-                    }
-                }
-            }
+            return;
         }
         else if (!shotGun && !manual)
         {
@@ -104,6 +117,10 @@ public class PvP_Shooting : MonoBehaviour
                 if (curAmmo > 0)
                 {
                     curAmmo--;
+                    if (bulletID == 0)
+                        uiManager.updateP1AmmoUI();
+                    else
+                        uiManager.updateP2AmmoUI();
 
                     if (curAmmo <= 0)
                     {
@@ -145,24 +162,7 @@ public class PvP_Shooting : MonoBehaviour
             return;
         if (reloading)
         {
-            if (Time.time > reloadTime + timeOfLastShot)
-            {
-                // reload complete
-                reloading = false;
-                if (curHeldAmmo >= 0)
-                {
-                    if (curHeldAmmo >= maxAmmo)
-                    {
-                        curAmmo = maxAmmo;
-                        curHeldAmmo -= maxAmmo;
-                    }
-                    else
-                    {
-                        curAmmo = curHeldAmmo;
-                        curHeldAmmo = 0;
-                    }
-                }
-            }
+            return;
         }
         else if (manual)
         {
@@ -171,6 +171,11 @@ public class PvP_Shooting : MonoBehaviour
                 if (curAmmo > 0)
                 {
                     curAmmo--;
+
+                    if (bulletID == 0)
+                        uiManager.updateP1AmmoUI();
+                    else
+                        uiManager.updateP2AmmoUI();
 
                     if (curAmmo <= 0)
                     {
@@ -211,6 +216,11 @@ public class PvP_Shooting : MonoBehaviour
                 {
                     curAmmo--;
 
+                    if (bulletID == 0)
+                        uiManager.updateP1AmmoUI();
+                    else
+                        uiManager.updateP2AmmoUI();
+
                     if (curAmmo <= 0)
                     {
                         reloading = true;
@@ -249,6 +259,11 @@ public class PvP_Shooting : MonoBehaviour
                 if (curAmmo > 0)
                 {
                     curAmmo--;
+
+                    if (bulletID == 0)
+                        uiManager.updateP1AmmoUI();
+                    else
+                        uiManager.updateP2AmmoUI();
 
                     if (curAmmo <= 0)
                     {
@@ -289,6 +304,7 @@ public class PvP_Shooting : MonoBehaviour
         }
     }
 
+    //  REDOO THIS SO THAT IT WILL WORK WITH 2 CONTROLLERS
     public IEnumerator controllerShake()
     {
         Gamepad.current.SetMotorSpeeds(strength, strength);

@@ -46,6 +46,7 @@ public class PvP_Health : MonoBehaviour
             // respawn the player at the spawn position
             transform.position = spawnPoint.transform.position;
             deaths++;
+            GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_UIManager>().updateKillsUI();
         }
     }
 }
