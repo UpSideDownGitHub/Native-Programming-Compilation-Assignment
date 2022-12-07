@@ -52,11 +52,11 @@ public class PvP_UIManager : MonoBehaviour
     {
         PvP_WeaponManager weaponManager = manager.P2.GetComponent<PvP_WeaponManager>();
         if (weaponManager.currentWeapon == 0)
-            P1Weapon.text = "Pistol";
+            P2Weapon.text = "Pistol";
         else if (weaponManager.currentWeapon == 1)
-            P1Weapon.text = "Assult Rifle";
+            P2Weapon.text = "Assult Rifle";
         else if (weaponManager.currentWeapon == 2)
-            P1Weapon.text = "Shotgun";
+            P2Weapon.text = "Shotgun";
         updateP2AmmoUI();
     }
     public void updateP2AmmoUI()
