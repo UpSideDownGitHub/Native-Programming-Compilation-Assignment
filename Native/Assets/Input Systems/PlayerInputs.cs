@@ -125,6 +125,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""A Buttton"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5bfeb24-ade0-4aec-a074-d4a1bbab947d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -435,6 +444,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""action"": ""PvP_Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c557534f-bd0b-4e59-b625-f85d106235f7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A Buttton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -654,6 +674,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_Map_PvP_WeaponSwapRight = m_Player_Map.FindAction("PvP_WeaponSwapRight", throwIfNotFound: true);
         m_Player_Map_PvP_Shoot2 = m_Player_Map.FindAction("PvP_Shoot2", throwIfNotFound: true);
         m_Player_Map_PvP_Dodge = m_Player_Map.FindAction("PvP_Dodge", throwIfNotFound: true);
+        m_Player_Map_AButtton = m_Player_Map.FindAction("A Buttton", throwIfNotFound: true);
         // Menus_Map
         m_Menus_Map = asset.FindActionMap("Menus_Map", throwIfNotFound: true);
         m_Menus_Map_Up = m_Menus_Map.FindAction("Up", throwIfNotFound: true);
@@ -732,6 +753,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map_PvP_WeaponSwapRight;
     private readonly InputAction m_Player_Map_PvP_Shoot2;
     private readonly InputAction m_Player_Map_PvP_Dodge;
+    private readonly InputAction m_Player_Map_AButtton;
     public struct Player_MapActions
     {
         private @PlayerInputs m_Wrapper;
@@ -747,6 +769,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @PvP_WeaponSwapRight => m_Wrapper.m_Player_Map_PvP_WeaponSwapRight;
         public InputAction @PvP_Shoot2 => m_Wrapper.m_Player_Map_PvP_Shoot2;
         public InputAction @PvP_Dodge => m_Wrapper.m_Player_Map_PvP_Dodge;
+        public InputAction @AButtton => m_Wrapper.m_Player_Map_AButtton;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -789,6 +812,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @PvP_Dodge.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Dodge;
                 @PvP_Dodge.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Dodge;
                 @PvP_Dodge.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnPvP_Dodge;
+                @AButtton.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnAButtton;
+                @AButtton.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnAButtton;
+                @AButtton.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnAButtton;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -826,6 +852,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @PvP_Dodge.started += instance.OnPvP_Dodge;
                 @PvP_Dodge.performed += instance.OnPvP_Dodge;
                 @PvP_Dodge.canceled += instance.OnPvP_Dodge;
+                @AButtton.started += instance.OnAButtton;
+                @AButtton.performed += instance.OnAButtton;
+                @AButtton.canceled += instance.OnAButtton;
             }
         }
     }
@@ -934,6 +963,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnPvP_WeaponSwapRight(InputAction.CallbackContext context);
         void OnPvP_Shoot2(InputAction.CallbackContext context);
         void OnPvP_Dodge(InputAction.CallbackContext context);
+        void OnAButtton(InputAction.CallbackContext context);
     }
     public interface IMenus_MapActions
     {

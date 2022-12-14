@@ -120,7 +120,7 @@ public class MenuManager : MonoBehaviour
         {
             if (Up.action.WasPressedThisFrame() && curSelected > 0)
                 curSelected--;
-            else if (Down.action.WasPressedThisFrame() && curSelected < 2)
+            else if (Down.action.WasPressedThisFrame() && curSelected < 3)
                 curSelected++;
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(buttons[curSelected]);
@@ -290,6 +290,11 @@ public class MenuManager : MonoBehaviour
         mainScreen.SetActive(false);
         levelSelectScreen.SetActive(true);
         prematureUpdateCall = true;
+    }
+
+    public void PvPPressed()
+    {
+        SceneManager.LoadSceneAsync(16);
     }
     public void SettingsPressed()
     {

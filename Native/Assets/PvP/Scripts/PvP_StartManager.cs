@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PvP_StartManager : MonoBehaviour
 {
+    [Header("Join Bools")]
     public bool p1Joined;
     public bool p2Joined;
+    public bool p1Confirmed;
+    public bool p2Confirmed;
 
+    [Header("Canvas")]
+    public GameObject playerJoinCanvas;
+    public GameObject GlobalUI;
+    public GameObject P1UI;
+    public GameObject P2UI;
+
+    [Header("Text")]
     public GameObject p1waitingText;
     public GameObject p1pressAnyButton;
     public GameObject p1join;
@@ -20,10 +31,12 @@ public class PvP_StartManager : MonoBehaviour
     public GameObject p2ready;
     public GameObject p2confirm;
 
+
     public void OnEnable()
     {
         Time.timeScale = 0f;
     }
+    
 
     public void p1JoinedGame()
     {
@@ -40,6 +53,8 @@ public class PvP_StartManager : MonoBehaviour
         p1ready.SetActive(false);
 
         p1confirm.SetActive(true);
+        p1Confirmed = true;
+        checkForStart();
     }
     public void p2JoinedGame()
     {
@@ -56,5 +71,24 @@ public class PvP_StartManager : MonoBehaviour
         p2ready.SetActive(false);
 
         p2confirm.SetActive(true);
+        p2Confirmed = true;
+        checkForStart();
+    }
+
+    public void checkForStart()
+    {
+        if (p2Confirmed && p1Confirmed)
+        {
+            // start the game
+            playerJoinCanvas.SetActive(false);
+            Time.timeScale = 1f;
+
+            GlobalUI.SetActive(true);
+            P1UI.SetActive(true);
+            P2UI.SetActive(true);
+
+            // set all of the UI elements to there initial values
+            GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_UIManager>().updateAllUI();
+        }
     }
 }

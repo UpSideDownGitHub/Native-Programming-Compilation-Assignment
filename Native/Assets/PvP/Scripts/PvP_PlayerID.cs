@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,6 +44,8 @@ public class PvP_PlayerID : MonoBehaviour
             manager.P1.GetComponent<MeshRenderer>().material.color = Color.blue;
             // start manager P1
             startManager.p1JoinedGame();
+            // movement (for input in the main menu)
+            manager.P1.GetComponent<PvP_Movement>().playerID = 1;
         }
         else if (playerID == 2) // Player 2 (red)
         {
@@ -66,6 +69,8 @@ public class PvP_PlayerID : MonoBehaviour
             manager.P2.GetComponent<MeshRenderer>().material.color = Color.red;
             // start manager P1
             startManager.p2JoinedGame();
+            // movement (for input in the main menu)
+            manager.P2.GetComponent<PvP_Movement>().playerID = 2;
         }
     }
 }

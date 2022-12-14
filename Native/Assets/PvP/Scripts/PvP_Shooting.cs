@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using Unity.VisualScripting;
-//using UnityEngine.InputSystem.iOS;
-//using System.Diagnostics.CodeAnalysis;
 
 public class PvP_Shooting : MonoBehaviour
 {
@@ -17,6 +15,7 @@ public class PvP_Shooting : MonoBehaviour
     public float shakeAmmount = 0.1f;
     [Range(0, 1)]
     public float strength = 0.5f;
+
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip clip;
@@ -42,6 +41,7 @@ public class PvP_Shooting : MonoBehaviour
     public float reloadTime;
     public float timeOfLastShot;
     public bool reloading;
+    private bool _once = true;
 
 
     [Header("Type")]
@@ -60,8 +60,16 @@ public class PvP_Shooting : MonoBehaviour
     [Header("UI")]
     public PvP_UIManager uiManager;
 
+    [Header("End Screen")]
+    public int shots;
+
 
     public void Start()
+    {
+        resetAmmo();
+    }
+
+    public void resetAmmo()
     {
         curAmmo = maxAmmo;
         curHeldAmmo = maxHeldAmmo;
@@ -82,7 +90,7 @@ public class PvP_Shooting : MonoBehaviour
         {
             // reload complete
             reloading = false;
-            if (curHeldAmmo >= 0)
+            if (curHeldAmmo > 0)
             {
                 if (curHeldAmmo >= maxAmmo)
                 {
@@ -94,6 +102,13 @@ public class PvP_Shooting : MonoBehaviour
                     curAmmo = curHeldAmmo;
                     curHeldAmmo = 0;
                 }
+            }
+            else if (_once)
+            {
+                Debug.Log("TEST");
+                _once = false;
+                // this weapon is out of ammo
+                gameObject.GetComponentInParent<PvP_Health>().lostAllAmmo();
             }
             if (bulletID == 0)
                 uiManager.updateP1AmmoUI();
@@ -118,9 +133,15 @@ public class PvP_Shooting : MonoBehaviour
                 {
                     curAmmo--;
                     if (bulletID == 0)
+                    { 
                         uiManager.updateP1AmmoUI();
+                        PvP_StatsCollector.Instance.P1Shots++;
+                    }
                     else
+                    {
                         uiManager.updateP2AmmoUI();
+                        PvP_StatsCollector.Instance.P2Shots++;
+                    }
 
                     if (curAmmo <= 0)
                     {
@@ -140,7 +161,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     cam.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
 
-                    StartCoroutine(controllerShake());
+                    //StartCoroutine(controllerShake());
 
                     audioSource.PlayOneShot(clip);
 
@@ -173,9 +194,15 @@ public class PvP_Shooting : MonoBehaviour
                     curAmmo--;
 
                     if (bulletID == 0)
+                    {
                         uiManager.updateP1AmmoUI();
+                        PvP_StatsCollector.Instance.P1Shots++;
+                    }
                     else
+                    {
                         uiManager.updateP2AmmoUI();
+                        PvP_StatsCollector.Instance.P2Shots++;
+                    }
 
                     if (curAmmo <= 0)
                     {
@@ -195,7 +222,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     cam.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
 
-                    StartCoroutine(controllerShake());
+                    //StartCoroutine(controllerShake());
 
                     audioSource.PlayOneShot(clip);
 
@@ -217,9 +244,15 @@ public class PvP_Shooting : MonoBehaviour
                     curAmmo--;
 
                     if (bulletID == 0)
+                    {
                         uiManager.updateP1AmmoUI();
+                        PvP_StatsCollector.Instance.P1Shots++;
+                    }
                     else
+                    {
                         uiManager.updateP2AmmoUI();
+                        PvP_StatsCollector.Instance.P2Shots++;
+                    }
 
                     if (curAmmo <= 0)
                     {
@@ -239,7 +272,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     cam.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
 
-                    StartCoroutine(controllerShake());
+                    //StartCoroutine(controllerShake());
 
                     audioSource.PlayOneShot(clip);
 
@@ -261,9 +294,15 @@ public class PvP_Shooting : MonoBehaviour
                     curAmmo--;
 
                     if (bulletID == 0)
+                    {
                         uiManager.updateP1AmmoUI();
+                        PvP_StatsCollector.Instance.P1Shots++;
+                    }
                     else
+                    {
                         uiManager.updateP2AmmoUI();
+                        PvP_StatsCollector.Instance.P2Shots++;
+                    }
 
                     if (curAmmo <= 0)
                     {
@@ -291,7 +330,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     //gameManager.shots++;
 
-                    StartCoroutine(controllerShake());
+                    //StartCoroutine(controllerShake());
 
                     //ammoText.text = curAmmo + "/" + GetComponent<ID>().maxAmmo;
                 }
@@ -302,13 +341,5 @@ public class PvP_Shooting : MonoBehaviour
                 }
             }
         }
-    }
-
-    //  REDOO THIS SO THAT IT WILL WORK WITH 2 CONTROLLERS
-    public IEnumerator controllerShake()
-    {
-        Gamepad.all[bulletID].SetMotorSpeeds(strength, strength);
-        yield return new WaitForSeconds(shakeAmmount);
-        Gamepad.all[bulletID].ResetHaptics();
     }
 }

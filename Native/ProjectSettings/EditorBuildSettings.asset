@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 5_4.unity
     guid: 312d21ad8ced5724393a637715e2a232
+  - enabled: 1
+    path: Assets/Scenes/PvP.unity
+    guid: 862568e8e263d5146a18a67d6715a5b8
   m_configObjects: {}

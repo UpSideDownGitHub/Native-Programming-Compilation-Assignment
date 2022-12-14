@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Rendering;
@@ -28,6 +29,20 @@ public class PvP_Movement : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip walkingSound;
 
+    [Header("Menu Button")]
+    public int playerID;
+    private bool _APressed;
+
+    [Header("Pause Menu")]
+    public bool _pausePressed;
+    public static bool paused;
+    public static int pauseID;
+
+    [Header("Controller Lost")]
+    public static bool lostP1;
+    public static bool lostP2;
+
+
 
     private void Awake()
     {
@@ -38,21 +53,86 @@ public class PvP_Movement : MonoBehaviour
     public void Mouse(InputAction.CallbackContext ctx) => _mousePos = ctx.ReadValue<Vector2>();
     public void Dodge(InputAction.CallbackContext ctx) => _dodge = ctx.action.WasPressedThisFrame();
 
+    // for the stating menu
+    public void AButton(InputAction.CallbackContext ctx)
+    {
+        _APressed = ctx.action.WasPressedThisFrame();
+    }
+
+    public void Pause(InputAction.CallbackContext ctx)
+    {
+        _pausePressed = ctx.action.WasPressedThisFrame();
+    }
+
+    public void lostController()
+    {
+        if (playerID == 1)
+        {
+            lostP1 = true;
+        }
+        else if (playerID == 2)
+        {
+            lostP2 = true;
+        }
+    }
+
+    public void regainedController()
+    {
+        if (playerID == 1)
+        {
+            lostP1 = false;
+        }
+        else if (playerID == 2)
+        {
+            lostP2 = false;
+        }
+    }
 
 
     // rotates the mouse positions
     public void Update()
     {
-        Vector3 _temp = new Vector3(_mousePos.x, 0, _mousePos.y);
-        if (_temp != Vector3.zero)
+        if (lostP1 || lostP2)
+            return;
+
+        if (_pausePressed)
         {
-            prevRotation = _temp;
-            transform.rotation = Quaternion.LookRotation(_temp);
+            _pausePressed = false;
+            if (!paused)
+            {
+                paused = true;
+                pauseID = playerID;
+            }
         }
-        else
+
+        // for the start menu
+        if (_APressed)
         {
-            if (prevRotation != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(prevRotation);
+            _APressed = false;
+            Debug.Log(playerID);
+            if (playerID == 1) // player 1
+            {
+                GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_StartManager>().p1Ready();
+            }
+            else if (playerID == 2) // player 2
+            {
+                GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_StartManager>().p2Ready();
+            }
+        }
+
+        if (Time.timeScale != 0)
+        {
+            Vector3 _temp = new Vector3(_mousePos.x, 0, _mousePos.y);
+            if (_temp != Vector3.zero)
+            {
+                prevRotation = _temp;
+                transform.rotation = Quaternion.LookRotation(_temp);
+            }
+            else
+            {
+                if (prevRotation != Vector3.zero)
+                    transform.rotation = Quaternion.LookRotation(prevRotation);
+            }
         }
     }
 

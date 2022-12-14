@@ -333,10 +333,34 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3756487323612738286}
+        m_TargetAssemblyTypeName: PvP_Movement, Assembly-CSharp
+        m_MethodName: lostController
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3756487323612738286}
+        m_TargetAssemblyTypeName: PvP_Movement, Assembly-CSharp
+        m_MethodName: regainedController
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -402,7 +426,19 @@ MonoBehaviour:
     m_ActionId: ed9b8d3c-985c-479e-8cd2-98ffc7e28786
     m_ActionName: Player_Map/Dodge[/XInputControllerWindows/leftShoulder,/XInputControllerWindows1/leftShoulder]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3756487323612738286}
+        m_TargetAssemblyTypeName: PvP_Movement, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6c9b66d8-0bf8-4876-85f2-3d31fce3d59e
     m_ActionName: Player_Map/Pause[/XInputControllerWindows/start,/XInputControllerWindows1/start]
   - m_PersistentCalls:
@@ -493,6 +529,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6d51d189-9077-4ce0-9279-11cc49582eb8
     m_ActionName: Player_Map/PvP_Dodge[/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3756487323612738286}
+        m_TargetAssemblyTypeName: PvP_Movement, Assembly-CSharp
+        m_MethodName: AButton
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e5bfeb24-ade0-4aec-a074-d4a1bbab947d
+    m_ActionName: Player_Map/A Buttton[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PvP
   m_DefaultActionMap: Player_Map
@@ -613,6 +665,8 @@ MonoBehaviour:
   prevRotation: {x: 0, y: 0, z: 0}
   audioSource: {fileID: 8182102944818014923}
   walkingSound: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
+  playerID: 0
+  _pausePressed: 0
 --- !u!114 &1932445829075690022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +682,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   spawnPoint: {fileID: 0}
+  uiManager: {fileID: 0}
   playerID: 0
   deaths: 0
 --- !u!114 &8967843991548711179
@@ -649,6 +704,7 @@ MonoBehaviour:
   - {fileID: 2949030253956671647}
   - {fileID: 8980065298096166442}
   playerID: 0
+  uiManager: {fileID: 0}
 --- !u!114 &6419488113367083187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,6 +721,7 @@ MonoBehaviour:
   manager: {fileID: 0}
   weaponManager: {fileID: 0}
   health: {fileID: 0}
+  startManager: {fileID: 0}
 --- !u!1 &8182102945063474393
 GameObject:
   m_ObjectHideFlags: 0

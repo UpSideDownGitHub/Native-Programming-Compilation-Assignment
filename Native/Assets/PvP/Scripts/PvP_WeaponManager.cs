@@ -46,27 +46,23 @@ public class PvP_WeaponManager : MonoBehaviour
     {
         if (_leftTrigger)
         {
-            print("Left Pressed");
             _leftTrigger = false;
             leftTrigger();
         }
         else if (_rightTrigger)
         {
-            print("Right Pressed");
             _rightTrigger = false;
             rightTrigger();
         }
         
         if (_shootPressed)
         {
-            print("Shoot Pressed");
             _shootPressed = false;
             ShootPressed();
 
         }
         else if (_shootHeld)
         {
-            print("Shoot Held");
             ShootHeld();
         }
     }

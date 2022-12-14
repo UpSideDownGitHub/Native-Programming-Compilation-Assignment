@@ -12,15 +12,25 @@ public class PvP_UIManager : MonoBehaviour
     public TMP_Text P1Weapon;
     public TMP_Text P1Ammo;
     public TMP_Text P1TotalAmmo;
+    public TMP_Text P1Health;
 
     public TMP_Text P2Kills;
     public TMP_Text P2Weapon;
     public TMP_Text P2Ammo;
     public TMP_Text P2TotalAmmo;
+    public TMP_Text P2Health; 
 
     void Start()
     {
         manager = GameObject.FindGameObjectWithTag("MANAGER").GetComponent<PvP_PlayerManager>();
+    }
+
+    public void updateAllUI()
+    {
+        updateKillsUI();
+        updateHealthUI();
+        updateP1WeaponsUI();
+        updateP2WeaponsUI();
     }
     
     public void updateKillsUI()
@@ -28,6 +38,13 @@ public class PvP_UIManager : MonoBehaviour
         P1Kills.text = "Kills: " + manager.P2.GetComponent<PvP_Health>().deaths.ToString();
         P2Kills.text = "Kills: " + manager.P1.GetComponent<PvP_Health>().deaths.ToString();
     }
+
+    public void updateHealthUI()
+    {
+        P1Health.text = manager.P1.GetComponent<PvP_Health>().currentHealth.ToString() + "/" + manager.P1.GetComponent<PvP_Health>().maxHealth.ToString();
+        P2Health.text = manager.P2.GetComponent<PvP_Health>().currentHealth.ToString() + "/" + manager.P1.GetComponent<PvP_Health>().maxHealth.ToString();
+    }
+
     
     public void updateP1WeaponsUI()
     {
