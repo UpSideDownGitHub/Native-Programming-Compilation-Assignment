@@ -54,7 +54,14 @@ public class PvP_PauseManager : MonoBehaviour
     public void menu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadSceneAsync(0);
+        try
+        {
+            SceneLoadingManager.instance.loadscene(0);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
     }
   
     public void exit()

@@ -68,7 +68,14 @@ public class GameManager : MonoBehaviour
             if (currentFloor < maxFloor)
             {
                 currentFloor++;
-                SceneManager.LoadSceneAsync(currentFloor + currentSceneIndex);
+                try
+                {
+                    SceneLoadingManager.instance.loadscene(currentFloor + currentSceneIndex);
+                }
+                catch
+                {
+                    print("Not Started From Main Menu");
+                }
             }
             else
             {

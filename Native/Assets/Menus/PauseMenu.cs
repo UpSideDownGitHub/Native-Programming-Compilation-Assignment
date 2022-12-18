@@ -49,7 +49,15 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         Destroy(GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>().gameObject);
-        SceneManager.LoadScene(0);
+
+        try
+        {
+            SceneLoadingManager.instance.loadscene(0);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
     }
     public void exitButton()
     {

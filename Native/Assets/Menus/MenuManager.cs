@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("########################################")]
     [Header("Input")]
     public PlayerInput playerInput;
     public InputActionReference Up;
@@ -18,11 +19,13 @@ public class MenuManager : MonoBehaviour
     public InputActionReference A;
     public InputActionReference B;
 
+    [Header("########################################")]
     [Header("Main Screen")]
     public GameObject mainScreen;
     public GameObject[] buttons;
     public int curSelected;
 
+    [Header("########################################")]
     [Header("Level Select Screen")]
     public GameObject levelSelectScreen;
     public GameObject sorter;
@@ -31,6 +34,7 @@ public class MenuManager : MonoBehaviour
     public int[] currentLevelSceneIndex;
     private bool prematureUpdateCall = false;
 
+    [Header("########################################")]
     [Header("Level Info Screen")]
     public GameObject levelInfo;
     public int level;
@@ -39,18 +43,26 @@ public class MenuManager : MonoBehaviour
     public TMP_Text levelInfoText;
     public Image levelImage;
 
+    [Header("########################################")]
+    [Header("Credits Screen")]
+    public GameObject creditsUI;
+
+    [Header("########################################")]
     [Header("Settings Screen")]
     public GameObject settingsScreen;
     public GameObject[] settingsButtons;
     public int settingsCurSelected;
     private bool inSettings = false;
 
+    [Header("########################################")]
     [Header("General Settings")]
     public GameObject settingsGeneralOptions;
 
+    [Header("########################################")]
     [Header("Sound Settings")]
     public GameObject settingsSoundOptions;
 
+    [Header("########################################")]
     [Header("Controls Settings")]
     public GameObject settingsControlOptions;
     public GameObject[] controlSettingButtons;
@@ -120,7 +132,7 @@ public class MenuManager : MonoBehaviour
         {
             if (Up.action.WasPressedThisFrame() && curSelected > 0)
                 curSelected--;
-            else if (Down.action.WasPressedThisFrame() && curSelected < 3)
+            else if (Down.action.WasPressedThisFrame() && curSelected < buttons.Length-1)
                 curSelected++;
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(buttons[curSelected]);
@@ -172,7 +184,7 @@ public class MenuManager : MonoBehaviour
             }
             else if (A.action.WasPressedThisFrame())
             {
-                SceneManager.LoadSceneAsync(level);
+                SceneLoadingManager.instance.loadscene(level);
                 Debug.Log("LOAD LEVEL: " + (level).ToString());
             }
         }
@@ -257,6 +269,14 @@ public class MenuManager : MonoBehaviour
                 }
             }
         }
+        else if (creditsUI.activeInHierarchy && !prematureUpdateCall)
+        {
+            if (B.action.WasPressedThisFrame())
+            {
+                creditsUI.SetActive(false);
+                mainScreen.SetActive(true);
+            }
+        }
         prematureUpdateCall = false;
     }
 
@@ -294,13 +314,25 @@ public class MenuManager : MonoBehaviour
 
     public void PvPPressed()
     {
-        SceneManager.LoadSceneAsync(16);
+        SceneLoadingManager.instance.loadscene(16);
     }
+
+    public void TutorialPressed()
+    {
+        SceneLoadingManager.instance.loadscene(1);
+    }
+
     public void SettingsPressed()
     {
         mainScreen.SetActive(false);
         settingsScreen.SetActive(true);
         prematureUpdateCall = true;
+    }
+
+    public void CreditsPressed()
+    {
+        mainScreen.SetActive(false);
+        creditsUI.SetActive(true);
     }
 
     public void ExitPressed()

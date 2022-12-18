@@ -42057,6 +42057,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 117843974}
     - target: {fileID: 3544662832325024302, guid: 633e69247ca703743a4768442b158b0f, type: 3}
+      propertyPath: maxFloor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544662832325024302, guid: 633e69247ca703743a4768442b158b0f, type: 3}
       propertyPath: endScreen
       value: 
       objectReference: {fileID: 431647116}
@@ -42064,6 +42068,18 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 897056670}
+    - target: {fileID: 3544662832325024302, guid: 633e69247ca703743a4768442b158b0f, type: 3}
+      propertyPath: currentEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544662832325024302, guid: 633e69247ca703743a4768442b158b0f, type: 3}
+      propertyPath: currentEnemies.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544662832325024302, guid: 633e69247ca703743a4768442b158b0f, type: 3}
+      propertyPath: currentEnemies.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3544662832325024303, guid: 633e69247ca703743a4768442b158b0f, type: 3}
       propertyPath: m_RootOrder
       value: 2

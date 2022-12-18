@@ -96,10 +96,24 @@ public class PvP_EndManager : MonoBehaviour
 
     public void restart()
     {
-        SceneManager.LoadSceneAsync(16);
+        try
+        {
+            SceneLoadingManager.instance.loadscene(16);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
     }
     public void mainMenu()
     {
-        SceneManager.LoadSceneAsync(0);
+        try
+        {
+            SceneLoadingManager.instance.loadscene(0);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
     }
 }

@@ -66,20 +66,41 @@ public class EndScreen : MonoBehaviour
     public void replayButton()
     {
         playerInput.SwitchCurrentActionMap("Player_Map");
-        SceneManager.LoadSceneAsync(gameManager.currentSceneIndex);
+        try
+        {
+            SceneLoadingManager.instance.loadscene(gameManager.currentSceneIndex);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
         Time.timeScale = 1f;
         Destroy(gameManager.gameObject);
     }
     public void menuButton()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        try
+        {
+            SceneLoadingManager.instance.loadscene(0);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
         Destroy(gameManager.gameObject);
     }
     public void nextButton()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadSceneAsync(gameManager.currentFloor + gameManager.currentSceneIndex + 1);
+        try
+        {
+            SceneLoadingManager.instance.loadscene(gameManager.currentFloor + gameManager.currentSceneIndex + 1);
+        }
+        catch
+        {
+            print("Not Started From Main Menu");
+        }
         Destroy(gameManager.gameObject);
     }
 
