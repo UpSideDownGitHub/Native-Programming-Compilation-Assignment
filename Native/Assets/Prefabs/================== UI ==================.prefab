@@ -2180,12 +2180,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
-  Up: {fileID: 8529722303033027879, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
-  Down: {fileID: 1874417066705181915, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
-  Left: {fileID: -3637717481801934881, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
-  Right: {fileID: 3888308603719541723, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
-  A: {fileID: -5398018203299378638, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
-  B: {fileID: -6505030324204536874, guid: 175f34e3288c36f48a1ef72101b16f62, type: 3}
+  Up: {fileID: -5324481310359567860, guid: a3741fd04c0405d4d8896e426926bb04, type: 3}
+  Down: {fileID: -7800479910559604386, guid: a3741fd04c0405d4d8896e426926bb04, type: 3}
+  Left: {fileID: 5868930338675338832, guid: a3741fd04c0405d4d8896e426926bb04, type: 3}
+  Right: {fileID: -8540949461182227876, guid: a3741fd04c0405d4d8896e426926bb04, type: 3}
+  A: {fileID: -5798142904005124297, guid: a3741fd04c0405d4d8896e426926bb04, type: 3}
+  B: {fileID: 5861435396123358843, guid: a3741fd04c0405d4d8896e426926bb04, type: 3}
   curSelected: 0
   buttons:
   - {fileID: 8431737373480972602}
