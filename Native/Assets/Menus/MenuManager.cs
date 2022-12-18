@@ -66,11 +66,11 @@ public class MenuManager : MonoBehaviour
         curSelected = 0;
         curLevel = 0;
 
-        string savedInput = PlayerPrefs.GetString("Controls", string.Empty);
+        string savedInput = PlayerPrefs.GetString("Controls2", string.Empty);
         if (string.IsNullOrEmpty(savedInput))
         {
             Save();
-            savedInput = PlayerPrefs.GetString("Controls", string.Empty);
+            savedInput = PlayerPrefs.GetString("Controls2", string.Empty);
         }
         playerInput.actions.LoadBindingOverridesFromJson(savedInput);
         loadCurrentKeybinds();
@@ -87,7 +87,7 @@ public class MenuManager : MonoBehaviour
     public void Save()
     {
         string currentInputs = playerInput.actions.SaveBindingOverridesAsJson();
-        PlayerPrefs.SetString("Controls", currentInputs);
+        PlayerPrefs.SetString("Controls2", currentInputs);
     }
 
     public void StartRebinding(int action)
