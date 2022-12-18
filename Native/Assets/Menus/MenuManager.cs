@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.InputSystem;
+using JetBrains.Annotations;
 
 public class MenuManager : MonoBehaviour
 {
@@ -233,8 +234,31 @@ public class MenuManager : MonoBehaviour
         {
             // load all of the basic elements in (the level info)
             levelName.text = "Level " + (curLevel + 1).ToString();
-            levelInfoText.text = "THIS IS A PLACE HOLDER FOR THE ACTUAL DESCRIPTION\n" + (curLevel + 1).ToString();
             //levelImage.sprite = Sprite;
+
+            int level = currentLevelSceneIndex[curLevel];
+            
+            string deaths, score, time;
+            int savedLowestDeaths = PlayerPrefs.GetInt("LowestDeaths" + level, int.MinValue);
+            if (savedLowestDeaths < 0)
+                deaths = "N/A";
+            else
+                deaths = savedLowestDeaths.ToString();
+
+            int savedHighestScore = PlayerPrefs.GetInt("HighestScore" + level, int.MinValue);
+            if (savedHighestScore < 0)
+                score = "N/A";
+            else
+                score = savedHighestScore.ToString();
+
+            float savedFastestTime = PlayerPrefs.GetFloat("FastestTime" + level, float.MinValue);
+            if (savedFastestTime <= 0)
+                time = "N/A";
+            else
+                time = savedFastestTime.ToString();
+
+            levelInfoText.text = "Lowest Deaths:\n" + deaths + "\nHighest Score:\n" + score + "\nFastest Time:\n" + time;
+
             firstTime = false;
         }
         if (B.action.WasPressedThisFrame())

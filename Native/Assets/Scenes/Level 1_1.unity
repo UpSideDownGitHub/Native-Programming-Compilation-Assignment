@@ -42734,6 +42734,10 @@ PrefabInstance:
       propertyPath: weaponPickup
       value: 
       objectReference: {fileID: 839144539}
+    - target: {fileID: 8431737372872204243, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8431737373060777285, guid: 821ff54971515544eb5813880b706db9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -42766,6 +42770,34 @@ PrefabInstance:
       propertyPath: playerInput
       value: 
       objectReference: {fileID: 382841195}
+    - target: {fileID: 8431737373068304419, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431737373068304419, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431737373068304419, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431737373068304419, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431737373068304419, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431737373068304419, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431737373068304447, guid: 821ff54971515544eb5813880b706db9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8431737373322317961, guid: 821ff54971515544eb5813880b706db9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

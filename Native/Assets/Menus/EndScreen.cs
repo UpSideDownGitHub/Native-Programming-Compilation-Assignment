@@ -26,6 +26,7 @@ public class EndScreen : MonoBehaviour
     public inGameManager ingamemanager;
     public GameManager gameManager;
 
+    [Header("###########################")]
     [Header("Text Objects")]
     public TMP_Text kills;
     public TMP_Text shots;
@@ -33,6 +34,16 @@ public class EndScreen : MonoBehaviour
     public TMP_Text death;
     public TMP_Text time;
     public TMP_Text score;
+
+    [Header("Best's")]
+    public TMP_Text bestDeaths;
+    public TMP_Text bestScore;
+    public TMP_Text bestTime;
+
+    [Header("New Best Messages")]
+    public GameObject deathsNewBest;
+    public GameObject scoreNewBest;
+    public GameObject timeNewBest;
 
     public void OnEnable()
     {
@@ -42,15 +53,65 @@ public class EndScreen : MonoBehaviour
         Time.timeScale = 0f;
 
         // initilse all of the UI componets of the end screen GUI
-        kills.text = "Kills: " + gameManager.kills.ToString();
-        shots.text = "shots: " + gameManager.shots.ToString();
-        if (gameManager.shots == 0)
-            accuracy.text = "accuracy: 100%";
+        kills.text = gameManager.kills.ToString();
+        shots.text = gameManager.shots.ToString();
+        if (gameManager.shots == 0 || gameManager.kills == 0)
+            accuracy.text = "0%";
         else
-            accuracy.text = "accuracy: " + ((gameManager.kills / gameManager.shots) * 100).ToString() + "%";
-        death.text = "deaths: " + gameManager.deaths.ToString();
-        time.text = "time: " + (gameManager.finishTime - gameManager.startTime).ToString();
-        score.text = "score: " + gameManager.score.ToString();
+            accuracy.text = ((float)((float)gameManager.kills / (float)gameManager.shots) * 100f).ToString() + "%";
+        death.text = gameManager.deaths.ToString();
+        time.text = (gameManager.finishTime - gameManager.startTime).ToString();
+        score.text = gameManager.score.ToString();
+
+        int savedLowestDeaths = PlayerPrefs.GetInt("LowestDeaths" + gameManager.currentSceneIndex, int.MaxValue);
+        if (savedLowestDeaths == int.MaxValue)
+        {
+            PlayerPrefs.SetInt("LowestDeaths" + gameManager.currentSceneIndex, -1);
+            savedLowestDeaths = PlayerPrefs.GetInt("LowestDeaths" + gameManager.currentSceneIndex, 0);
+        }
+        if (savedLowestDeaths < 0)
+            bestDeaths.text = "N/A";
+        else
+            bestDeaths.text = savedLowestDeaths.ToString();
+
+        int savedHighestScore = PlayerPrefs.GetInt("HighestScore" + gameManager.currentSceneIndex, int.MaxValue);
+        if (savedHighestScore == int.MaxValue)
+        {
+            PlayerPrefs.SetInt("HighestScore" + gameManager.currentSceneIndex, -1);
+            savedHighestScore = PlayerPrefs.GetInt("HighestScore" + gameManager.currentSceneIndex, 0);
+        }
+        if (savedHighestScore < 0)
+            bestScore.text = "N/A";
+        else
+            bestScore.text = savedHighestScore.ToString();
+
+        float savedFastestTime = PlayerPrefs.GetFloat("FastestTime" + gameManager.currentSceneIndex, float.MaxValue);
+        if (savedFastestTime == float.MaxValue)
+        {
+            PlayerPrefs.SetFloat("FastestTime" + gameManager.currentSceneIndex, -1);
+            savedFastestTime = PlayerPrefs.GetFloat("FastestTime" + gameManager.currentSceneIndex, 0);
+        }
+        if (savedFastestTime <= 0)
+            bestTime.text = "N/A";
+        else
+            bestTime.text = savedFastestTime.ToString();
+
+
+        if (gameManager.deaths < savedLowestDeaths || gameManager.deaths < 0)
+        {
+            PlayerPrefs.SetInt("LowestDeaths" + gameManager.currentSceneIndex, gameManager.deaths);
+            deathsNewBest.SetActive(true);
+        }
+        if (gameManager.score > savedHighestScore)
+        {
+            PlayerPrefs.SetInt("HighestScore" + gameManager.currentSceneIndex, gameManager.score);
+            scoreNewBest.SetActive(true);
+        }
+        if ((gameManager.finishTime - gameManager.startTime) < savedFastestTime || savedFastestTime <= 0)
+        {
+            PlayerPrefs.SetFloat("FastestTime" + gameManager.currentSceneIndex, (gameManager.finishTime - gameManager.startTime));
+            timeNewBest.SetActive(true);
+        }
     }
 
     public void Update()
