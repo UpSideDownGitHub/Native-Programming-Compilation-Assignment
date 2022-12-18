@@ -57,10 +57,14 @@ public class MenuManager : MonoBehaviour
     [Header("########################################")]
     [Header("General Settings")]
     public GameObject settingsGeneralOptions;
+    public GameObject[] generalSettingsButtons;
+    public int curGeneralSetting;
 
     [Header("########################################")]
     [Header("Sound Settings")]
     public GameObject settingsSoundOptions;
+    public GameObject[] soundSettingsButtons;
+    public int curSoundSetting;
 
     [Header("########################################")]
     [Header("Controls Settings")]
@@ -130,155 +134,237 @@ public class MenuManager : MonoBehaviour
     {
         if (mainScreen.activeInHierarchy)
         {
-            if (Up.action.WasPressedThisFrame() && curSelected > 0)
-                curSelected--;
-            else if (Down.action.WasPressedThisFrame() && curSelected < buttons.Length-1)
-                curSelected++;
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(buttons[curSelected]);
+            inMainScreenMenu();
         }
         else if (levelSelectScreen.activeInHierarchy && !prematureUpdateCall)
         {
-            if (Left.action.WasPressedThisFrame() && curLevel > 0)
-            {
-                curLevel--;
-                sorter.transform.position = new Vector3(sorter.transform.position.x + moveAmmount,
-                                        sorter.transform.position.y,
-                                        sorter.transform.position.z);
-            }
-            else if (Right.action.WasPressedThisFrame() && curLevel < sorter.transform.childCount - 1)
-            {
-                curLevel++;
-                sorter.transform.position = new Vector3(sorter.transform.position.x - moveAmmount,
-                                        sorter.transform.position.y,
-                                        sorter.transform.position.z);
-            }
-
-            if (B.action.WasPressedThisFrame())
-            {
-                levelSelectScreen.SetActive(false);
-                mainScreen.SetActive(true);
-            }
-            else if (A.action.WasPressedThisFrame())
-            {
-                levelSelectScreen.SetActive(false);
-                levelInfo.SetActive(true);
-                level = currentLevelSceneIndex[curLevel];
-            }
+            inLevelSelectMenu();
         }
         else if (levelInfo.activeInHierarchy)
         {
-            if (firstTime)
-            {
-                // load all of the basic elements in (the level info)
-                levelName.text = "Level " + (curLevel + 1).ToString();
-                levelInfoText.text = "THIS IS A PLACE HOLDER FOR THE ACTUAL DESCRIPTION\n" + (curLevel + 1).ToString();
-                //levelImage.sprite = Sprite;
-                firstTime = false;
-            }
-            if (B.action.WasPressedThisFrame())
-            {
-                levelInfo.SetActive(false);
-                levelSelectScreen.SetActive(true);
-                firstTime = true;
-            }
-            else if (A.action.WasPressedThisFrame())
-            {
-                SceneLoadingManager.instance.loadscene(level);
-                Debug.Log("LOAD LEVEL: " + (level).ToString());
-            }
+            inLevelInfoMenu();
         }
         else if (settingsScreen.activeInHierarchy && !prematureUpdateCall)
         {
-            if (inSettings)
-            {
-                if (settingsGeneralOptions.activeInHierarchy)
-                {
-
-                }
-                else if (settingsSoundOptions.activeInHierarchy)
-                {
-
-                }
-                else if (settingsControlOptions.activeInHierarchy)
-                {
-                    if (Up.action.WasPressedThisFrame() && (curControlSetting == 1 ||
-                                                           curControlSetting == 3))
-                        curControlSetting--;
-                    else if (Down.action.WasPressedThisFrame() && (curControlSetting == 0 ||
-                                                                   curControlSetting == 2))
-                        curControlSetting++;
-                    else if (Right.action.WasPressedThisFrame() && (curControlSetting == 0 ||
-                                                                    curControlSetting == 1))
-                        curControlSetting += 2;
-                    else if (Left.action.WasPressedThisFrame() && (curControlSetting == 2 ||
-                                                                   curControlSetting == 3))
-                        curControlSetting -= 2;
-
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(controlSettingButtons[curControlSetting]);
-
-                    if (A.action.WasPressedThisFrame())
-                    {
-                        if (curControlSetting == 0)
-                        {
-                            // swap the input of the movement and aim
-                            Debug.Log("Movement & Aim");
-                        }
-                        else if (curControlSetting == 1)
-                        {
-                            // call the record new input for the shoot function
-                            Debug.Log("Shoot");
-                        }
-                        else if (curControlSetting == 2)
-                        {
-                            // call the record new input for the pickup function
-                            Debug.Log("Pickup");
-                        }
-                        else if (curControlSetting == 3)
-                        {
-                            // call the record new input for the dodge function
-                            Debug.Log("Dodge");
-                        }
-                        else if (curControlSetting == 4)
-                        {
-                            // call the record new input for the throw function
-                            Debug.Log("Throw");
-                        }
-                    }
-                }
-
-                if (B.action.WasPressedThisFrame())
-                {
-                    inSettings = false;
-                }
-            }
-            else
-            {
-                if (Up.action.WasPressedThisFrame() && settingsCurSelected > 0)
-                    settingsCurSelected--;
-                else if (Down.action.WasPressedThisFrame() && settingsCurSelected < settingsButtons.Length - 1)
-                    settingsCurSelected++;
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(settingsButtons[settingsCurSelected]);
-
-                if (B.action.WasPressedThisFrame())
-                {
-                    settingsScreen.SetActive(false);
-                    mainScreen.SetActive(true);
-                }
-            }
+            inSettingsMenu();
         }
         else if (creditsUI.activeInHierarchy && !prematureUpdateCall)
         {
-            if (B.action.WasPressedThisFrame())
-            {
-                creditsUI.SetActive(false);
-                mainScreen.SetActive(true);
-            }
+            inCreditsMenu();
         }
         prematureUpdateCall = false;
     }
+
+    public void inMainScreenMenu()
+    {
+        if (Up.action.WasPressedThisFrame() && curSelected > 0)
+            curSelected--;
+        else if (Down.action.WasPressedThisFrame() && curSelected < buttons.Length - 1)
+            curSelected++;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(buttons[curSelected]);
+    }
+
+    public void inLevelSelectMenu()
+    {
+        if (Left.action.WasPressedThisFrame() && curLevel > 0)
+        {
+            curLevel--;
+            sorter.transform.position = new Vector3(sorter.transform.position.x + moveAmmount,
+                                    sorter.transform.position.y,
+                                    sorter.transform.position.z);
+        }
+        else if (Right.action.WasPressedThisFrame() && curLevel < sorter.transform.childCount - 1)
+        {
+            curLevel++;
+            sorter.transform.position = new Vector3(sorter.transform.position.x - moveAmmount,
+                                    sorter.transform.position.y,
+                                    sorter.transform.position.z);
+        }
+
+        if (B.action.WasPressedThisFrame())
+        {
+            levelSelectScreen.SetActive(false);
+            mainScreen.SetActive(true);
+        }
+        else if (A.action.WasPressedThisFrame())
+        {
+            levelSelectScreen.SetActive(false);
+            levelInfo.SetActive(true);
+            level = currentLevelSceneIndex[curLevel];
+        }
+    }
+    public void inLevelInfoMenu()
+    {
+        if (firstTime)
+        {
+            // load all of the basic elements in (the level info)
+            levelName.text = "Level " + (curLevel + 1).ToString();
+            levelInfoText.text = "THIS IS A PLACE HOLDER FOR THE ACTUAL DESCRIPTION\n" + (curLevel + 1).ToString();
+            //levelImage.sprite = Sprite;
+            firstTime = false;
+        }
+        if (B.action.WasPressedThisFrame())
+        {
+            levelInfo.SetActive(false);
+            levelSelectScreen.SetActive(true);
+            firstTime = true;
+        }
+        else if (A.action.WasPressedThisFrame())
+        {
+            SceneLoadingManager.instance.loadscene(level);
+            Debug.Log("LOAD LEVEL: " + (level).ToString());
+        }
+    }
+    public void inSettingsMenu()
+    {
+        if (inSettings)
+        {
+            if (settingsGeneralOptions.activeInHierarchy)
+            {
+                if (Up.action.WasPressedThisFrame() && curGeneralSetting > 0)
+                    curGeneralSetting--;
+                else if (Down.action.WasPressedThisFrame() && curGeneralSetting < generalSettingsButtons.Length - 1)
+                    curGeneralSetting++;
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(generalSettingsButtons[curGeneralSetting]);
+
+                if (Right.action.IsPressed())
+                {
+                    Slider slider = EventSystem.current.currentSelectedGameObject.GetComponent<Slider>();
+                    if (slider != null)
+                    {
+                        if (slider.value < slider.maxValue)
+                        {
+                            slider.value += 0.005f;
+                        }
+                    }
+                }
+                else if (Left.action.IsPressed())
+                {
+                    Slider slider = EventSystem.current.currentSelectedGameObject.GetComponent<Slider>();
+                    if (slider != null)
+                    {
+                        if (slider.value > slider.minValue)
+                        {
+                            slider.value -= 0.005f;
+                        }
+                    }
+                }
+            }
+            else if (settingsSoundOptions.activeInHierarchy)
+            {
+                if (Up.action.WasPressedThisFrame() && curSoundSetting > 0)
+                    curSoundSetting--;
+                else if (Down.action.WasPressedThisFrame() && curSoundSetting < soundSettingsButtons.Length-1)
+                    curSoundSetting++;
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(soundSettingsButtons[curSoundSetting]);
+
+                if (Right.action.IsPressed())
+                {
+                    Slider slider = EventSystem.current.currentSelectedGameObject.GetComponent<Slider>();
+                    if (slider != null)
+                    {
+                        if (slider.value < slider.maxValue)
+                        {
+                            slider.value += 0.005f;
+                        }
+                    }
+                }
+                else if (Left.action.IsPressed())
+                {
+                    Slider slider = EventSystem.current.currentSelectedGameObject.GetComponent<Slider>();
+                    if (slider != null)
+                    {
+                        if (slider.value > slider.minValue)
+                        {
+                            slider.value -= 0.005f;
+                        }
+                    }
+                }
+            }
+            else if (settingsControlOptions.activeInHierarchy)
+            {
+                if (Up.action.WasPressedThisFrame() && (curControlSetting == 1 ||
+                                                       curControlSetting == 3))
+                    curControlSetting--;
+                else if (Down.action.WasPressedThisFrame() && (curControlSetting == 0 ||
+                                                               curControlSetting == 2))
+                    curControlSetting++;
+                else if (Right.action.WasPressedThisFrame() && (curControlSetting == 0 ||
+                                                                curControlSetting == 1))
+                    curControlSetting += 2;
+                else if (Left.action.WasPressedThisFrame() && (curControlSetting == 2 ||
+                                                               curControlSetting == 3))
+                    curControlSetting -= 2;
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(controlSettingButtons[curControlSetting]);
+
+                if (A.action.WasPressedThisFrame())
+                {
+                    if (curControlSetting == 0)
+                    {
+                        // swap the input of the movement and aim
+                        Debug.Log("Movement & Aim");
+                    }
+                    else if (curControlSetting == 1)
+                    {
+                        // call the record new input for the shoot function
+                        Debug.Log("Shoot");
+                    }
+                    else if (curControlSetting == 2)
+                    {
+                        // call the record new input for the pickup function
+                        Debug.Log("Pickup");
+                    }
+                    else if (curControlSetting == 3)
+                    {
+                        // call the record new input for the dodge function
+                        Debug.Log("Dodge");
+                    }
+                    else if (curControlSetting == 4)
+                    {
+                        // call the record new input for the throw function
+                        Debug.Log("Throw");
+                    }
+                }
+            }
+
+            if (B.action.WasPressedThisFrame())
+            {
+                inSettings = false;
+            }
+        }
+        else
+        {
+            if (Up.action.WasPressedThisFrame() && settingsCurSelected > 0)
+                settingsCurSelected--;
+            else if (Down.action.WasPressedThisFrame() && settingsCurSelected < settingsButtons.Length - 1)
+                settingsCurSelected++;
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(settingsButtons[settingsCurSelected]);
+
+            if (B.action.WasPressedThisFrame())
+            {
+                settingsScreen.SetActive(false);
+                mainScreen.SetActive(true);
+            }
+        }
+    }
+
+    public void inCreditsMenu()
+    {
+        if (B.action.WasPressedThisFrame())
+        {
+            creditsUI.SetActive(false);
+            mainScreen.SetActive(true);
+        }
+    }
+
 
     public void SettingsGeneralPressed()
     {
