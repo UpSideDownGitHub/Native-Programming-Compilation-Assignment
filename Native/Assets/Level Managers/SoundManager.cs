@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour
     public void Start()
     {
         previousSong = Random.Range(0, clips.Length);
-        audioSource.PlayOneShot(clips[previousSong]);
+        audioSource.PlayOneShot(clips[previousSong], PlayerPrefs.GetFloat("MusicVolume", 0));
     }
 
     public void Update()
@@ -24,7 +24,7 @@ public class SoundManager : MonoBehaviour
             if (temp != previousSong)
             {
                 previousSong = temp;
-                audioSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+                audioSource.PlayOneShot(clips[Random.Range(0, clips.Length)], PlayerPrefs.GetFloat("MusicVolume", 0));
             }
         }
     }

@@ -90,7 +90,7 @@ public class Shooting : MonoBehaviour
                     shotTime = Time.time;
 
                     StartCoroutine(controllerShake());
-                    audioSource.PlayOneShot(clip);
+                    audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
                     makeSound();
                 }
             }
@@ -118,7 +118,7 @@ public class Shooting : MonoBehaviour
 
                             makeSound();
 
-                            audioSource.PlayOneShot(clip);
+                            audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                             gameManager.shots++;
                         }
@@ -146,7 +146,7 @@ public class Shooting : MonoBehaviour
 
                             makeSound();
 
-                            audioSource.PlayOneShot(clip);
+                            audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                             gameManager.shots++;
                         }
@@ -177,7 +177,7 @@ public class Shooting : MonoBehaviour
 
                             makeSound();
 
-                            audioSource.PlayOneShot(clip);
+                            audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                             gameManager.shots++;
 

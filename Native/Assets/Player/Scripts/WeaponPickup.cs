@@ -79,7 +79,7 @@ public class WeaponPickup : MonoBehaviour
                 Destroy(currentWeapon);
                 currentWeapon = null;
                 fists.SetActive(true);
-                audioSource.PlayOneShot(audioClip);
+                audioSource.PlayOneShot(audioClip, PlayerPrefs.GetFloat("SFXVolume", 0));
                 ammoText.text = "Fist";
 
             }
@@ -98,7 +98,7 @@ public class WeaponPickup : MonoBehaviour
                     _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
                     _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
                     Destroy(currentWeapon);
-                    audioSource.PlayOneShot(audioClip);
+                    audioSource.PlayOneShot(audioClip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                 }
                 // spawning new weapon
@@ -139,7 +139,7 @@ public class WeaponPickup : MonoBehaviour
             _temp2.GetComponent<Rigidbody>().AddForce(transform.forward * Random.Range(minForce, maxForce));
             _temp2.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque), Random.Range(minTorque, maxTorque)));
             Destroy(currentWeapon);
-            audioSource.PlayOneShot(audioClip);
+            audioSource.PlayOneShot(audioClip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
         }
         // spawning new weapon

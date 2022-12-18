@@ -163,7 +163,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     //StartCoroutine(controllerShake());
 
-                    audioSource.PlayOneShot(clip);
+                    audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                     //gameManager.shots++;
                 }
@@ -224,7 +224,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     //StartCoroutine(controllerShake());
 
-                    audioSource.PlayOneShot(clip);
+                    audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                     //gameManager.shots++;
                 }
@@ -274,7 +274,7 @@ public class PvP_Shooting : MonoBehaviour
 
                     //StartCoroutine(controllerShake());
 
-                    audioSource.PlayOneShot(clip);
+                    audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                     //gameManager.shots++;
                 }
@@ -326,7 +326,7 @@ public class PvP_Shooting : MonoBehaviour
                     cam.gameObject.GetComponent<CameraShake>().cameraShake(camShakeDuration, camShakeStrength);
 
 
-                    audioSource.PlayOneShot(clip);
+                    audioSource.PlayOneShot(clip, PlayerPrefs.GetFloat("SFXVolume", 0));
 
                     //gameManager.shots++;
 

@@ -43,7 +43,9 @@ public class PlayerMovement : MonoBehaviour
         if (_temp != Vector3.zero)
         {
             prevRotation = _temp;
-            transform.rotation = Quaternion.LookRotation(_temp);
+            Quaternion rot = Quaternion.LookRotation(_temp);
+            print(PlayerPrefs.GetFloat("Sensitivity", 1));
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, PlayerPrefs.GetFloat("Sensitivity", 1));
         }
         else
         {

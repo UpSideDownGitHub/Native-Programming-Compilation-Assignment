@@ -53,7 +53,7 @@ public class EnemyHealth : MonoBehaviour
             if (collision.gameObject.CompareTag("E_DAMAGE_MELEE"))
             {
                 Debug.Log(audioClips[collision.gameObject.GetComponent<INFO>().meleeID]);
-                audioSource.PlayOneShot(audioClips[collision.gameObject.GetComponent<INFO>().meleeID], 1f);
+                audioSource.PlayOneShot(audioClips[collision.gameObject.GetComponent<INFO>().meleeID], PlayerPrefs.GetFloat("SFXVolume", 0));
                 takeDamage(collision.gameObject.GetComponent<INFO>().damage);
             }
         }

@@ -210,7 +210,7 @@ public class Enemy : MonoBehaviour
 
                 if (angle < minAngle)
                 {   
-                    audioSource.PlayOneShot(audioClip);
+                    audioSource.PlayOneShot(audioClip, PlayerPrefs.GetFloat("SFXVolume", 0));
                     _player.GetComponent<Health>().changeHealth(-damage);
                 }
             }
@@ -231,7 +231,7 @@ public class Enemy : MonoBehaviour
                         _temp.GetComponent<INFO>().damage = damage;
                         Physics.IgnoreCollision(_temp.GetComponent<Collider>(), _player.GetComponent<PickupColliderID>().col);
                     }
-                    audioSource.PlayOneShot(audioClip);
+                    audioSource.PlayOneShot(audioClip, PlayerPrefs.GetFloat("SFXVolume", 0));
                     GameObject particle = Instantiate(shotParticleEffect, firePoint.transform.position, firePoint.transform.rotation);
                     Destroy(particle, 2);
                 }
@@ -256,7 +256,7 @@ public class Enemy : MonoBehaviour
                     GameObject particle = Instantiate(shotParticleEffect, firePoint.transform.position, firePoint.transform.rotation);
                     Destroy(particle, 2);
 
-                    audioSource.PlayOneShot(audioClip);
+                    audioSource.PlayOneShot(audioClip, PlayerPrefs.GetFloat("SFXVolume", 0));
                 }
                 else
                 {

@@ -82,6 +82,7 @@ public class MenuManager : MonoBehaviour
         curSelected = 0;
         curLevel = 0;
 
+        // custom controls
         string savedInput = PlayerPrefs.GetString("Controls2", string.Empty);
         if (string.IsNullOrEmpty(savedInput))
         {
@@ -90,6 +91,38 @@ public class MenuManager : MonoBehaviour
         }
         playerInput.actions.LoadBindingOverridesFromJson(savedInput);
         loadCurrentKeybinds();
+
+        // Set Sensitivity Slider
+        Slider sensitivitySlider = generalSettingsButtons[0].GetComponent<Slider>();
+        float savedSensitivity = PlayerPrefs.GetFloat("Sensitivity", float.MinValue);
+        if (savedSensitivity == float.MinValue)
+        {
+            PlayerPrefs.SetFloat("Sensitivity", 1);
+            savedSensitivity = PlayerPrefs.GetFloat("Sensitivity", float.MinValue);
+        }
+        sensitivitySlider.value = savedSensitivity;
+
+        // Set Volume Sliders
+        Slider musicVolumeSlider = soundSettingsButtons[0].GetComponent<Slider>();
+        Slider sfxVolumeSlider = soundSettingsButtons[1].GetComponent<Slider>();
+        float savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", float.MinValue);
+        float savedsfxVolume = PlayerPrefs.GetFloat("SFXVolume", float.MinValue);
+        if (savedMusicVolume == float.MinValue)
+        {
+            PlayerPrefs.SetFloat("MusicVolume", 1);
+            savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", float.MinValue);
+        }
+        if (savedsfxVolume == float.MinValue)
+        {
+            PlayerPrefs.SetFloat("SFXVolume", 1);
+            savedsfxVolume = PlayerPrefs.GetFloat("SFXVolume", float.MinValue);
+        }
+        musicVolumeSlider.value = savedMusicVolume;
+        sfxVolumeSlider.value = savedsfxVolume;
+
+        gameObject.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MusicVolume", 0);
+
+
     }
     public void loadCurrentKeybinds()
     {
@@ -350,6 +383,19 @@ public class MenuManager : MonoBehaviour
 
             if (B.action.WasPressedThisFrame())
             {
+                // SAVE THE SETTINGS
+                // Set Sensitivity Slider
+                Slider sensitivitySlider = generalSettingsButtons[0].GetComponent<Slider>();
+                PlayerPrefs.SetFloat("Sensitivity", sensitivitySlider.value);
+
+                // Set Volume Sliders
+                Slider musicVolumeSlider = soundSettingsButtons[0].GetComponent<Slider>();
+                Slider sfxVolumeSlider = soundSettingsButtons[1].GetComponent<Slider>();
+                PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
+                PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
+
+                gameObject.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MusicVolume", 0);
+
                 settingsScreen.SetActive(false);
                 mainScreen.SetActive(true);
             }
