@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = this.GetComponent<Rigidbody>();
 
-        string savedInput = PlayerPrefs.GetString("Controls", string.Empty);
+        string savedInput = PlayerPrefs.GetString("Controls2", string.Empty);
         playerInput.actions.LoadBindingOverridesFromJson(savedInput);
     }
 
