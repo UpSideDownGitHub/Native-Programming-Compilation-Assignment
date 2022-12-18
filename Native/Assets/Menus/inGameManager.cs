@@ -18,40 +18,14 @@ public class inGameManager : MonoBehaviour
     [Header("Scripts")]
     public PauseMenu pauseMenu;
 
-    [Header("Device Connections")]
-    public InputDevice activeDevice = null;
-    public GameObject controllerDisconnectedWarning;
+    [Header("Controller Disconnected")]
+    public GameObject controllerDisconnectedUI;
 
     public bool canPause;
 
     public void OnEnable()
     {
-        //activeDevice = null;
-        activeDevice = Gamepad.current;
         canPause = true;
-        //print(activeDevice);
-        InputSystem.onDeviceChange += (device, change) =>
-        {
-            switch (change)
-            {
-                case InputDeviceChange.Added:
-                    //Debug.Log("New device added: " + device);
-                    activeDevice = device;
-                    break;
-
-                case InputDeviceChange.Removed:
-                    //Debug.Log("Device removed: " + device);
-                    if (device == activeDevice)
-                    {
-                        if (canPause)
-                        {
-                            controllerDisconnectedWarning.SetActive(true);
-                            openPauseMenu();
-                        }
-                    }
-                    break;
-            }
-        };
     }
 
 
@@ -66,6 +40,18 @@ public class inGameManager : MonoBehaviour
             }
         }
     }
+    public void controllerConnected()
+    {
+        Time.timeScale = 1f;
+        canPause = true;
+        controllerDisconnectedUI.SetActive(false);
+    }
+    public void controllerDisconnected()
+    {
+        Time.timeScale = 0f;
+        canPause = false;
+        controllerDisconnectedUI.SetActive(true);
+    }
 
     public void openPauseMenu()
     {
@@ -76,7 +62,6 @@ public class inGameManager : MonoBehaviour
 
     public void closePauseMenu()
     {
-        controllerDisconnectedWarning.SetActive(false);
         scoreUI.SetActive(true);
         pauseUI.SetActive(false);
         pauseMenu.enabled = false;
