@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 8182102944818014913}
-  Offset: {x: 0, y: 20, z: 0}
+  Offset: {x: 0, y: 30, z: 0}
 --- !u!114 &1957821137954597679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,7 +546,7 @@ MonoBehaviour:
     m_ActionId: e5bfeb24-ade0-4aec-a074-d4a1bbab947d
     m_ActionName: Player_Map/A Buttton[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: PvP
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player_Map
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1957821137954597674}
@@ -658,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccce1d3537ddfe54ba54cd285e25a90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 20
+  movementSpeed: 10
   smoothValue: 0.05
   dodgeMultiplier: 1.5
   strength: 5
@@ -679,9 +679,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50eeb6c2877bc3746a7261a61647a2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 20
   currentHealth: 0
-  spawnPoint: {fileID: 0}
+  spawnPoints: []
   uiManager: {fileID: 0}
   playerID: 0
   deaths: 0
@@ -833,7 +833,7 @@ Transform:
   m_GameObject: {fileID: 8182102945148163614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 6.82, z: 4.67}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8182102944818014913}
@@ -1069,6 +1069,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1957821137954597674}
+    - target: {fileID: 8315080311974849519, guid: 117ebd9a8809e544b8a3be16f9f54430, type: 3}
+      propertyPath: damage
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315080311974849519, guid: 117ebd9a8809e544b8a3be16f9f54430, type: 3}
+      propertyPath: bulletSpeed
+      value: 800
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 117ebd9a8809e544b8a3be16f9f54430, type: 3}
 --- !u!1 &8980065298096166442 stripped
@@ -1092,6 +1100,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1957821137954597674}
+    - target: {fileID: 3932635826811777778, guid: fbd85999d52eb8d4f8599bdae9a98a22, type: 3}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3932635826811777778, guid: fbd85999d52eb8d4f8599bdae9a98a22, type: 3}
+      propertyPath: bulletSpeed
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 7475315397229304418, guid: fbd85999d52eb8d4f8599bdae9a98a22, type: 3}
       propertyPath: m_Name
       value: PvP_Pistol
@@ -1163,6 +1179,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1957821137954597674}
+    - target: {fileID: 3223810251991465819, guid: 6fe4aefd7cf1fd5428227eb78c564dee, type: 3}
+      propertyPath: bulletSpeed
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5766250190492266187, guid: 6fe4aefd7cf1fd5428227eb78c564dee, type: 3}
       propertyPath: m_Name
       value: PvP_Assult

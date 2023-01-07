@@ -11,7 +11,7 @@ public class PvP_Health : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
-    public GameObject spawnPoint;
+    public GameObject[] spawnPoints;
     private GameManager gameManager;
     public PvP_UIManager uiManager;
 
@@ -26,7 +26,7 @@ public class PvP_Health : MonoBehaviour
         deaths = 0;
         _outOfAmmoCount = 0;
         currentHealth = maxHealth;
-        spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
+        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         uiManager = GameObject.FindGameObjectWithTag("PvP_UIManager").GetComponent<PvP_UIManager>();
     }
 
@@ -65,7 +65,7 @@ public class PvP_Health : MonoBehaviour
         else
         {
             // respawn the player at the spawn position and reset the health of the player
-            transform.position = spawnPoint.transform.position;
+            transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position;
             deaths++;
             currentHealth = maxHealth;
 
