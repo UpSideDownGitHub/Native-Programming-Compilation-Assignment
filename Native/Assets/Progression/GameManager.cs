@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public void resetKills()
     {
         currentEnemies = (int[])_maxEnemies.Clone();
+        _doOnce = false;
     }
 
     public void OnEnable()
