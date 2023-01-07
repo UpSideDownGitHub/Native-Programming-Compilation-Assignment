@@ -97,7 +97,7 @@ public class EndScreen : MonoBehaviour
             bestTime.text = savedFastestTime.ToString();
 
 
-        if (gameManager.deaths < savedLowestDeaths || gameManager.deaths < 0)
+        if (gameManager.deaths < savedLowestDeaths || savedLowestDeaths < 0)
         {
             PlayerPrefs.SetInt("LowestDeaths" + gameManager.currentSceneIndex, gameManager.deaths);
             deathsNewBest.SetActive(true);

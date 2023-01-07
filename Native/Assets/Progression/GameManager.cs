@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Unity.VisualScripting.Member;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Kills")]
     public int[] currentEnemies;
+    [SerializeField]
+    private int[] _maxEnemies;
 
     [Header("End Screen")]
     public GameObject endScreen;
@@ -28,7 +31,17 @@ public class GameManager : MonoBehaviour
     public float startTime;
     public float finishTime;
 
+    [Header("Level Complete UI")]
+    public GameObject levelCompleteUI;
+    public float showTime;
+    private bool _doOnce;
+
     private bool noSuicide;
+
+    public void resetKills()
+    {
+        currentEnemies = (int[])_maxEnemies.Clone();
+    }
 
     public void OnEnable()
     {
@@ -36,12 +49,18 @@ public class GameManager : MonoBehaviour
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         startTime = Time.time;
         stairsEnabled = false;
+        _doOnce = false;
 
         if (GameObject.FindGameObjectsWithTag("MANAGER").Length > 1 && !noSuicide)
+        { 
             Destroy(gameObject);
+            return;
+        }
         else
+        {
             noSuicide = true;
-
+            _maxEnemies = (int[])currentEnemies.Clone();
+        }  
     }
 
     public void Update()
@@ -53,10 +72,20 @@ public class GameManager : MonoBehaviour
             inGameUI = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<inGameManager>().scoreUI;
         }
         // Killed all of the enemies
-        if (currentEnemies[currentFloor] <= 0)
+        
+        if (currentEnemies[currentFloor] <= 0 && !_doOnce)
         {
+            _doOnce = true;
+            StartCoroutine(showMessege());
             stairsEnabled = true;
         }
+    }
+
+    public IEnumerator showMessege()
+    {
+        levelCompleteUI.SetActive(true);
+        yield return new WaitForSeconds(showTime);
+        levelCompleteUI.SetActive(false);
     }
 
     public void stairs()
@@ -70,6 +99,7 @@ public class GameManager : MonoBehaviour
                 try
                 {
                     SceneLoadingManager.instance.loadscene(currentFloor + currentSceneIndex);
+                    _doOnce = false;
                 }
                 catch
                 {

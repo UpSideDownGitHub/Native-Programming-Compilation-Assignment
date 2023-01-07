@@ -8,7 +8,9 @@ public class Stairs : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>().stairs();
+            try { GameObject.FindGameObjectWithTag("MANAGER").GetComponent<GameManager>().stairs(); }
+            catch { /* WAS NOT FOUND, ALREADY ENDED THE LEVEL */ }
+            
         }
     }
 }

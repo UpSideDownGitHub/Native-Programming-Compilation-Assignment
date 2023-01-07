@@ -37,6 +37,7 @@ public class Health : MonoBehaviour
         else
         {
             gameManager.deaths++;
+            gameManager.resetKills();
             Gamepad.current.ResetHaptics();
             SceneManager.LoadSceneAsync(currentScene);
         }

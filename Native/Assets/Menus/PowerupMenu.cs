@@ -23,7 +23,9 @@ public class PowerupMenu : MonoBehaviour
         // need to change the active map to the menus map and then also make the gamplay stop
         playerInput.SwitchCurrentActionMap("Menus_Map"); // default = Player_Map
         Time.timeScale = 0f;
-        Gamepad.current.ResetHaptics();
+        try { Gamepad.current.ResetHaptics(); }
+        catch { /* No Controller Connected Yet */ }
+        
     }
 
     public void Update()

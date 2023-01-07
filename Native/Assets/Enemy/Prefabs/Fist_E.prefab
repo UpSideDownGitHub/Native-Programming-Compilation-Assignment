@@ -202,7 +202,7 @@ MonoBehaviour:
   firstAttack: 1
   attackWait: 0.5
   melee: 1
-  meleeAttackDistance: 0
+  meleeAttackDistance: 2
   minAngle: 25
   meleeStoppingDistance: 1.5
   auto: 0
