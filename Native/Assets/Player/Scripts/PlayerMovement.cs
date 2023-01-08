@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _rb = this.GetComponent<Rigidbody>();
-
         string savedInput = PlayerPrefs.GetString("Controls2", string.Empty);
         playerInput.actions.LoadBindingOverridesFromJson(savedInput);
     }
